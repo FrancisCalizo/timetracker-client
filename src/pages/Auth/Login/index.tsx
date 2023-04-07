@@ -43,17 +43,6 @@ export default function Login() {
     // navigate('/dashboard');
   };
 
-  const testFunction = async () => {
-    try {
-      const res = await axios.get(`/getAllClients`);
-
-      console.log(res);
-
-    } catch (err: any) {
-      setIsLoginError(err.response.data)
-    }
-  }
-
   return (
     <>
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -113,8 +102,6 @@ export default function Login() {
         </div>
       </div>
     </form>
-
-    <button className={classes['login-button']} onClick={testFunction}>Test</button>
   </>
   );
 }

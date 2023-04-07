@@ -1,0 +1,15 @@
+:root {
+  /* Buttons */
+  --button-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.4);
+
+  /* Colors */
+  --color-primary: #ff6b6b;
+  --color-text-primary: #2d3436;
+  --color-danger: #d63031;
+  --color-edit: #0097e6;
+  --color-success: #27ae60;
+
+  /* Inputs */
+  --input-padding: 0.75rem;
+  --input-font-size: 1rem;
+}
