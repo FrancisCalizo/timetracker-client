@@ -24,7 +24,7 @@ export default function Register() {
     const { email, password } = data;
 
     try {
-      const res = await axios.post('http://localhost:5000/register', {
+      const res = await axios.post('/register', {
         email,
         password,
       });
