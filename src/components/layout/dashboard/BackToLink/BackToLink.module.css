@@ -1,0 +1,11 @@
+/* @import '../../../../vars.css'; */
+
+.breadcrumbs-container {
+  display: flex;
+  align-items: center;
+  color: var(--color-primary);
+}
+
+.breadcrumbs-container svg {
+  color: var(--color-primary);
+}

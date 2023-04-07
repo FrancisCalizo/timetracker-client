@@ -1,0 +1,35 @@
+/* @import '../../../../vars.css'; */
+
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 80px;
+  /* margin: 0 auto; */
+}
+
+.button {
+  border: 1px solid #aaa;
+  box-shadow: var(--button-box-shadow);
+  border-radius: 5px;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: transform 150ms ease-in-out;
+}
+
+.button:hover {
+  transform: scale(1.1);
+  transition: transform 150ms ease-in-out;
+}
+
+.button-view {
+  background: var(--color-success);
+}
+
+.button-edit {
+  background: var(--color-edit);
+}
+
+svg {
+  color: #fff;
+}
