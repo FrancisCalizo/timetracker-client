@@ -14,7 +14,7 @@ export default function BackToLink(props: BackToLinkProps) {
   const { text, to, onClick = () => null } = props;
 
   return (
-    <Link to={to} onClick={() => onClick()}>
+    <Link to={to} onClick={() => onClick()} style={{ textDecoration: 'none' }}>
       <div className={classes['breadcrumbs-container']}>
         <FontAwesomeIcon
           icon={faChevronLeft}

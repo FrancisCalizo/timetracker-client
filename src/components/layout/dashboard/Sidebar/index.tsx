@@ -46,6 +46,7 @@ export default function Sidebar() {
                     ? '/dashboard'
                     : `/dashboard/${link.url.toLowerCase()}`
                 }
+                style={{ textDecoration: 'none' }}
               >
                 <li
                   className={`${classes['li-link']} ${

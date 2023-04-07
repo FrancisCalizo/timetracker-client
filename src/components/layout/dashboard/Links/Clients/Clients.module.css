@@ -26,7 +26,7 @@
   padding: 0.75rem 1rem;
   border-radius: 6px;
   font-size: 1rem;
-  cursor: pointer;
+  cursor: pointer;  
   box-shadow: var(--button-box-shadow);
   transition: background 300ms ease-in-out, transform 150ms ease-in-out,
     filter 150ms ease-in-out;
