@@ -10,7 +10,7 @@ export default function Clients() {
     <div>
       <div className={classes['title-container']}>
         <h1>Clients</h1>
-        <Link to="/dashboard/clients/add-client" style={{ textDecoration: 'none' }}>
+        <Link to="/dashboard/clients/add-client" >
           <div className={classes['button-container']}>
             <button>
               <FontAwesomeIcon icon={faPlus} style={{ marginRight: '.5rem' }} />

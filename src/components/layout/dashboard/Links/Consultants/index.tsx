@@ -10,7 +10,7 @@ export default function Consultants() {
     <div>
       <div className={classes['title-container']}>
         <h1>Consultants</h1>
-        <Link to="/dashboard/consultants/add-consultant">
+        <Link to="/dashboard/consultants/add-consultant" >
           <div className={classes['button-container']}>
             <button>
               <FontAwesomeIcon icon={faPlus} style={{ marginRight: '.5rem' }} />
