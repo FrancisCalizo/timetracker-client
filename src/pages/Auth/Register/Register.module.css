@@ -51,6 +51,7 @@
   margin: 0.5rem 0;
   border: 1px solid lightgray;
   border-radius: 4px;
+  box-sizing: border-box;
 }
 
 .error-message {
@@ -84,4 +85,11 @@
 
 .register-button:hover {
   filter: brightness(85%);
+}
+
+.register-error{
+  width: 100%;
+  text-align: center;
+  margin: .25rem 0;
+  color: var(--color-danger);
 }
