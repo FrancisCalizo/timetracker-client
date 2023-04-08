@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
@@ -18,6 +19,8 @@ export default function Register() {
     formState: { errors, isSubmitting },
   } = useForm<FormValues>();
 
+  const [isRegisterError, setIsRegisterError] = React.useState<string | null>(null)
+
   const onSubmit = async (data: FormValues) => {
     console.log('data', data);
 
@@ -29,9 +32,20 @@ export default function Register() {
         password,
       });
 
-      console.log(res);
-    } catch (err) {
+      // Redirect them to their dashboard
+      if (res.status === 200) {
+        navigate('/dashboard');
+      }
+
+    } catch (err: any) {
       console.log(err);
+
+      if (err.response.status === 403){
+        setIsRegisterError(err.response.data)
+      } else {
+        setIsRegisterError('Something went wrong. Please try again.')
+      }    
+
     }
 
     // navigate('/dashboard');
@@ -82,6 +96,10 @@ export default function Register() {
             </Link>
 
             <button className={classes['register-button']}>Register</button>
+
+            <p className={classes['register-error']}>
+              {isRegisterError && isRegisterError}
+            </p>
           </div>
         </div>
       </div>

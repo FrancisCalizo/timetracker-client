@@ -1,7 +1,7 @@
+import * as React from 'react'
 import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from 'axios'
-import * as React from 'react'
 
 import classes from './login.module.css';
 
@@ -20,11 +20,9 @@ export default function Login() {
     formState: { errors, isSubmitting },
   } = useForm<FormValues>();
 
-  const [isLoginError, setIsLoginError] = React.useState(null)
+  const [isLoginError, setIsLoginError] = React.useState<string | null>(null)
 
-  const onSubmit = async (data: FormValues) => {
-    console.log('data', data);
-
+  const onSubmit = async (data: FormValues) => {    
     const { email, password } = data;
 
     try {
@@ -33,14 +31,20 @@ export default function Login() {
         password,
       });
 
-      console.log(res);
+      // Redirect them to their dashboard
+      if (res.status === 200) {
+        navigate('/dashboard');
+      }
 
       setIsLoginError(null)
     } catch (err: any) {
-      setIsLoginError(err.response.data)
+      if (err.response.status === 403){
+        setIsLoginError(err.response.data)
+      } else {
+        setIsLoginError('Something went wrong. Please try again.')
+      }
     }
 
-    // navigate('/dashboard');
   };
 
   return (
@@ -95,9 +99,9 @@ export default function Login() {
 
             <button className={classes['login-button']}>Login</button>
 
-            
-
-            {isLoginError && isLoginError}
+            <p className={classes['login-error']}>
+              {isLoginError && isLoginError}
+            </p>
           </div>
         </div>
       </div>

@@ -19,23 +19,33 @@ const PrivateRoute = () => {
 
 
   const handleCheckAuth = async () => {
-    let res
-
     try {
-      res = await axios.post('/isLoggedIn')
+      const res = await axios.post('/isLoggedIn')
       
       if (res.data === 'Unauthorized') {        
         setIsAuthorized('UNAUTHORIZED')
         setUserInfo(null)
       } else {
-        if (!userInfo) {
+        if (!userInfo) {          
+
           const user = res?.data?.user;
 
           if (user) {
             delete user.exp;
             delete user.iat;
 
-            setUserInfo(res.data.user);
+            const res = await axios.get(`/getUserInfo/${user.id}`)
+            
+            if (res.status === 200) {
+              
+              setUserInfo({
+                id: res.data.id,
+                firstName: res.data.firstname,
+                lastName: res.data.lastname,
+                email: res.data.email,
+                type: res.data.type
+              })
+            }
           }
         }
 

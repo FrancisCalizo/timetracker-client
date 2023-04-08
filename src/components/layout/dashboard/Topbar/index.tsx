@@ -6,12 +6,15 @@ import {
   faBars,
   faClock,
 } from '@fortawesome/free-solid-svg-icons';
+import { useAppContext } from 'src/context/appContext';
 
 import MobileSidebar from '../MobileSidebar';
 import UserDropdown from '../UserDropdown';
 import classes from './Topbar.module.css';
 
 export default function Topbar() {
+  const { userInfo } = useAppContext()
+
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
@@ -43,8 +46,10 @@ export default function Topbar() {
 
       <div className={classes['right-section']}>
         <div>
-          <span className={classes['user-name']}>Albert Johnson</span>
-          <p className={classes['user-title']}>Consultant</p>
+          <span className={classes['user-name']}>
+            {`${userInfo?.firstName} ${userInfo?.lastName}`}
+          </span>
+          <p className={classes['user-title']}>{userInfo?.type}</p>
         </div>
 
         <Popover
