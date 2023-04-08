@@ -1,13 +1,17 @@
+import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { ArrowContainer, PopoverState } from 'react-tiny-popover';
+
+import { useAppContext } from 'src/context/appContext';
 
 import classes from './UserDropdown.module.css';
 
 export default function UserDropdown(props: PopoverState) {
   const { position, childRect, popoverRect } = props;
 
+  const { setUserInfo } = useAppContext()
   const navigate = useNavigate();
 
   const userDashboardDropdownItems = [
@@ -24,9 +28,22 @@ export default function UserDropdown(props: PopoverState) {
     {
       title: 'Logout',
       icon: faSignOutAlt,
-      onClick: () => navigate('/'),
+      onClick: () => handleLogout(),
     },
   ];
+
+  const handleLogout = async () => {
+    try {
+      const res = await axios.post('/logout')
+
+      if (res.status === 200) {
+        setUserInfo(null)
+        navigate('/')
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   return (
     <ArrowContainer
