@@ -12,6 +12,7 @@ import ViewEditTableButtons from 'src/components/layout/dashboard/ViewEditTableB
 import { TableStyles } from 'src/components/layout/dashboard/Links/Timesheets/TimesheetsTable';
 import { TableInstanceWithHooks } from 'src/components/layout/dashboard/Links/Timesheets/TimesheetsTable';
 import TablePagination from 'src/components/layout/dashboard/TablePagination';
+import { formatCurrency } from 'src/utils';
 
 function ConsultantTable() {
   const { consultantList } = useConsultant();
@@ -25,9 +26,15 @@ function ConsultantTable() {
           <ViewEditTableButtons rowObj={props.row} type="CONSULTANT" />
         ),
       },
-      { Header: 'Consultant Name', accessor: 'name' },
+      { Header: 'Consultant Name', accessor: 'consultantName' },
       { Header: 'Email', accessor: 'email' },
-      { Header: 'Rate', accessor: 'rate' },
+      { 
+        Header: 'Rate',
+        accessor: 'rate',
+        // @ts-ignore
+        Cell: (props: any) =>
+          `${formatCurrency(props.row.original.rate)}`,
+      },
     ],
     []
   );
