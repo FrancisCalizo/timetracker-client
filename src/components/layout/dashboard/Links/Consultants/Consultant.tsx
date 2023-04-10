@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import * as React from 'react';
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
@@ -7,9 +8,8 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Tooltip } from 'react-tooltip';
 
 import { useConsultant } from 'src/context/consultantContext';
-import BackToLink from '../../../BackToLink';
-import classes from './Consultant.module.css';
-import { FormValues } from '../AddConsultant';
+import BackToLink from '../../BackToLink';
+import { FormValues } from './AddConsultant';
 
 export default function Consultant() {
   const navigate = useNavigate();
@@ -63,7 +63,7 @@ export default function Consultant() {
   };
 
   return (
-    <div>
+    <Styled>
       <div style={{ maxWidth: 200 }}>
         <BackToLink
           to="/dashboard/consultants"
@@ -72,10 +72,10 @@ export default function Consultant() {
         />
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={classes['page-container']}>
-          <div className={classes['form-container']}>
+        <div className={'page-container'}>
+          <div className={'form-container'}>
             {!isEditMode && (
-              <div className={`${classes['edit-container']}`}>
+              <div className={`${'edit-container'}`}>
                 <button
                   type="button"
                   onClick={() => setIsEditMode(true)}
@@ -91,10 +91,10 @@ export default function Consultant() {
 
             {isEditMode && <h2>Edit Consultant</h2>}
 
-            <div className={classes['grid-container']}>
-              <div className={classes['consultant-name']}>
+            <div className={'grid-container'}>
+              <div className={'consultant-name'}>
                 <label
-                  className={classes['input-label']}
+                  className={'input-label'}
                   htmlFor="consultantName"
                 >
                   Consultant Name
@@ -102,27 +102,27 @@ export default function Consultant() {
                 <input
                   disabled={!isEditMode}
                   id="consultantName"
-                  className={classes['input']}
+                  className={'input'}
                   type="text"
                   {...register('consultantName', {
                     required: 'This field is required',
                   })}
                 />
                 {errors.consultantName && (
-                  <div className={classes['error-message']}>
+                  <div className={'error-message'}>
                     {errors.consultantName.message}
                   </div>
                 )}
               </div>
 
-              <div className={`${classes['email']}`}>
-                <label className={classes['input-label']} htmlFor="email">
+              <div className={`${'email'}`}>
+                <label className={'input-label'} htmlFor="email">
                   Email
                 </label>
                 <input
                   disabled={!isEditMode}
                   id="email"
-                  className={classes['input']}
+                  className={'input'}
                   type="email"
                   {...register('email', {
                     required: 'This field is required',
@@ -134,27 +134,27 @@ export default function Consultant() {
                   })}
                 />
                 {errors.email && (
-                  <div className={classes['error-message']}>
+                  <div className={'error-message'}>
                     {errors.email.message}
                   </div>
                 )}
               </div>
 
-              <div className={`${classes['rate']}`}>
-                <label className={classes['input-label']} htmlFor="rate">
+              <div className={`${'rate'}`}>
+                <label className={'input-label'} htmlFor="rate">
                   Rate
                 </label>
                 <input
                   disabled={!isEditMode}
                   id="rate"
-                  className={classes['input']}
+                  className={'input'}
                   type="text"
                   {...register('rate', {
                     required: 'This field is required',
                   })}
                 />
                 {errors.rate && (
-                  <div className={classes['error-message']}>
+                  <div className={'error-message'}>
                     {errors.rate.message}
                   </div>
                 )}
@@ -162,18 +162,18 @@ export default function Consultant() {
             </div>
 
             {isEditMode && (
-              <div className={classes['buttons-container']}>
+              <div className={'buttons-container'}>
                 <button
                   type="button"
                   onClick={() => setIsEditMode(false)}
-                  className={`${classes['button']} ${classes['cancel']}`}
+                  className={`${'button'} ${'cancel'}`}
                 >
                   Cancel
                 </button>
 
                 <button
                   type="submit"
-                  className={`${classes['button']} ${classes['save']}`}
+                  className={`${'button'} ${'save'}`}
                 >
                   Save
                 </button>
@@ -182,6 +182,142 @@ export default function Consultant() {
           </div>
         </div>
       </form>
-    </div>
+    </Styled>
   );
 }
+
+const Styled = styled.div`
+  .page-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+    background: #f1f2f6;
+  }
+
+  .form-container {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 800px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 2rem 2rem 1rem;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    background: #fff;
+
+    & > h2 {
+      text-align: center;
+      font-size: 2rem;
+      color: rgba(0, 0, 0, 0.7);
+    }
+  }
+
+  .edit-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 2rem;
+
+    & > button {
+      cursor: pointer;
+      background: transparent;
+      color: rgba(0, 0, 0, 0.7);
+      border: none;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+      border-radius: 4px;
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+
+      & > p {
+        margin: 0 0 0 0.5rem;
+      }
+
+      & > svg {
+        color: var(--color-primary);
+        font-size: 1.5rem;
+      }
+    }
+  } 
+  
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    row-gap: 0.5rem;
+    column-gap: 1rem;
+  }
+
+  .consultant-name {
+    grid-column: span 12;
+    grid-row-start: 1;
+  }
+
+  .email {
+    grid-column: span 6;
+    grid-row-start: 2;
+  }
+
+  .rate {
+    grid-column: span 6;
+    grid-row-start: 2;
+  }
+
+  .input-label {
+    color: var(--color-primary);
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .input {
+    width: 100%;
+    font-size: calc(14px + (16 - 14) * ((100vw - 400px) / (1800 - 400)));
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  .error-message {
+    color: var(--color-danger);
+    font-size: 12px !important;
+    width: 100%;
+    margin: 0 2px 0;
+  }
+
+  .buttons-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 3rem;
+  }
+
+  .button {
+    display: block;
+    font-size: var(--input-font-size);
+    box-shadow: var(--box-shadow);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 300ms ease-in-out, transform 150ms ease-in-out,
+      filter 150ms ease-in-out;
+  }
+
+  .save {
+    background: var(--color-primary);
+    color: white;
+    border: 0.5px solid white;
+    padding: 0.75rem 3rem;
+    margin-left: 0.5rem;
+
+    &:hover {
+      filter: brightness(85%);
+    }
+  }
+
+  .cancel {
+    padding: 0.75rem 2rem;
+    border: 0.5px solid white;
+
+    &:hover {
+      filter: brightness(85%);
+    }
+  }
+`
