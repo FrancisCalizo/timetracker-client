@@ -24,7 +24,7 @@ import {
   StartEnd,
   DEFAULT_WEEK,
   validationSchema,
-} from 'src/components/layout/dashboard/Links/Timesheets/AddTimesheet/types';
+} from 'src/components/layout/dashboard/Links/Timesheets/types';
 import { selectStyles } from 'src/components/layout/dashboard/Links/Timesheets/AddTimesheet';
 
 export default function Timesheet() {
@@ -85,6 +85,8 @@ export default function Timesheet() {
         }
       }
     }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleCreateTimesheetRows = (startDate: Date) => {
@@ -304,7 +306,7 @@ export default function Timesheet() {
                       type="number"
                       {...register('rate', {
                         onBlur: (e) => {
-                          if (e.target.value == '') {
+                          if (e.target.value === '') {
                             e.target.value = 0;
                           }
 
@@ -315,7 +317,7 @@ export default function Timesheet() {
                         },
                         onChange: (e) => {
                           // Change the value of all "Rate" fields
-                          if (e.target.value != '') {
+                          if (e.target.value !== '') {
                             fields?.forEach((_, idx) => {
                               setValue(
                                 `timesheets.${idx}.rate`,
