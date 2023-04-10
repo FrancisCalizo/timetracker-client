@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { FAKE_DATA } from 'src/components/layout/dashboard/Links/Timesheets/data';
+import { FAKE_DATA } from 'src/components/layout/dashboard/Links/Timesheets/utils/data';
 
 const TimesheetsContext = React.createContext(null as any);
 

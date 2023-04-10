@@ -23,7 +23,7 @@ import {
   WeekSelection,
   SELECT_OPTIONS,
   validationSchema,
-} from './types';
+} from './utils/types';
 
 export default function AddClient() {
   const navigate = useNavigate();
