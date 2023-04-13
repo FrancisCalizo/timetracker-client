@@ -14,7 +14,7 @@ import Consultant from 'src/pages/Dashboard/Consultants/Consultant';
 import AddConsultant from 'src/pages/Dashboard/Consultants/AddConsultant';
 import Register from 'src/pages/Auth/Register'
 import Landing from 'src/pages/Home/Landing'
-import ProtectedRoute from 'src/components/ProtectedRoute'
+// import ProtectedRoute from 'src/components/ProtectedRoute'
 
 function App() {
   const router = useRoutes([
@@ -22,9 +22,10 @@ function App() {
     { path: '/login', element: <Login /> },
     { path: '/register', element: <Register /> },
     { path: '/forgot-password', element: <ResetPassword /> },
-    { element: <ProtectedRoute />, 
+    // { element: <ProtectedRoute />, 
+    { path: '/dashboard', 
       children : [
-        { path: '/dashboard', children: [
+          // { path: '/dashboard', children: [
           { index: true, element: <Dashboard /> },
           { path: 'clients/:id', element: <Client /> },
           { path: 'clients/add-client', element: <AddClient /> },
@@ -34,8 +35,7 @@ function App() {
           { path: 'consultants/', element: <Consultants /> },
           { path: 'consultants/add-consultant', element: <AddConsultant /> },
           { path: 'consultants/:id', element: <Consultant /> },
-        ]}]
-    },
+        ]},
     { path: '*', element: <h1>Page not found</h1> },
   ]);
   return (

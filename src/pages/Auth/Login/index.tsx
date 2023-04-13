@@ -24,25 +24,26 @@ export default function Login() {
   const onSubmit = async (data: FormValues) => {    
     const { email, password } = data;
 
-    try {
-      const res = await axios.post(`/login`, {      
-        email,
-        password,
-      });
+    navigate('/dashboard');
 
-      // Redirect them to their dashboard
-      if (res.status === 200) {
-        navigate('/dashboard');
-      }
+    // try {
+    //   const res = await axios.post(`/login`, {      
+    //     email,
+    //     password,
+    //   });
 
-      setIsLoginError(null)
-    } catch (err: any) {
-      if (err.response.status === 403){
-        setIsLoginError(err.response.data)
-      } else {
-        setIsLoginError('Something went wrong. Please try again.')
-      }
-    }
+    //   // Redirect them to their dashboard
+    //   if (res.status === 200) {
+    //   }
+
+    //   setIsLoginError(null)
+    // } catch (err: any) {
+    //   if (err.response.status === 403){
+    //     setIsLoginError(err.response.data)
+    //   } else {
+    //     setIsLoginError('Something went wrong. Please try again.')
+    //   }
+    // }
 
   };
 

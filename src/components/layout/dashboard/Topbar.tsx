@@ -47,9 +47,9 @@ export default function Topbar() {
       <div className={'right-section'}>
         <div>
           <span className={'user-name'}>
-            {`${userInfo?.firstName} ${userInfo?.lastName}`}
+            {`${userInfo?.firstName || 'Albert'} ${userInfo?.lastName || 'Johnson'}`}
           </span>
-          <p className={'user-title'}>{userInfo?.type}</p>
+          <p className={'user-title'}>{userInfo?.type || 'Admin'}</p>
         </div>
 
         <Popover
