@@ -22,7 +22,7 @@ export default function UserDropdown(props: PopoverState) {
     {
       title: 'Settings',
       icon: faCog,
-      onClick: () => alert('Coming Soon'),
+      onClick: () => navigate('dashboard/settings'),
     },
     {
       title: 'Logout',

@@ -5,6 +5,7 @@ import {
   faBusinessTime,
   faUsers,
   faUser,
+  faCog
 } from '@fortawesome/free-solid-svg-icons';
 import { useLocation, Link } from 'react-router-dom';
 import classnames from 'classnames'
@@ -15,6 +16,7 @@ export const MENU_LINKS = [
   { title: 'Clients', url: 'clients', icon: faUsers },
   { title: 'Timesheets', url: 'timesheets', icon: faBusinessTime },
   { title: 'Consultants', url: 'consultants', icon: faUser },
+  { title: 'Settings', url: 'settings', icon: faCog, section: 'BOTTOM' },
 ];
 
 export default function Sidebar() {
@@ -35,8 +37,6 @@ export default function Sidebar() {
               currentRoute === undefined && link.url === MENU_LINKS[0].url
                 ? true
                 : currentRoute === link.url.toLowerCase();
-
-                console.log(isCurrent)
             return (
               <Link
                 className={classnames('g-link', isCurrent && 'g-link-current')}
@@ -85,15 +85,16 @@ const Styled = styled.div`
 
   .sidebar-links {
     display: flex;
-    flex-direction: column;
+    flex-direction: column;    
     list-style-type: none;
     margin-top: 32px;
+    height: 100%;    
   }
 
   .li-link {
     font-size: 1rem;
     padding: 1rem 1.85rem;
-    transition: all 0.1s ease-out;
+    transition: all 0.1s ease-out;    
     display: flex;
     align-items: center;
 

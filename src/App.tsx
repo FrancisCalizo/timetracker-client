@@ -12,6 +12,7 @@ import AddTimesheet from 'src/pages/Dashboard/Timesheets/AddTimesheet';
 import Consultants from 'src/pages/Dashboard/Consultants';
 import Consultant from 'src/pages/Dashboard/Consultants/Consultant';
 import AddConsultant from 'src/pages/Dashboard/Consultants/AddConsultant';
+import Settings from 'src/pages/Dashboard/Settings';
 import Register from 'src/pages/Auth/Register'
 import Landing from 'src/pages/Home/Landing'
 import ProtectedRoute from 'src/components/ProtectedRoute'
@@ -35,6 +36,7 @@ function App() {
           { path: 'consultants/', element: <Consultants /> },
           { path: 'consultants/add-consultant', element: <AddConsultant /> },
           { path: 'consultants/:id', element: <Consultant /> },
+          { path: 'settings', element: <Settings /> },
         ]},
     { path: '*', element: <h1>Page not found</h1> },
   ]);
@@ -56,6 +58,7 @@ function App() {
           { path: 'consultants/', element: <Consultants /> },
           { path: 'consultants/add-consultant', element: <AddConsultant /> },
           { path: 'consultants/:id', element: <Consultant /> },
+          { path: 'settings', element: <Settings /> },
         ]}]
     },
     { path: '*', element: <h1>Page not found</h1> },
