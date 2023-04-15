@@ -25,30 +25,31 @@ export default function Register() {
     console.log('data', data);
 
     const { email, password } = data;
-
-    try {
-      const res = await axios.post('/register', {
-        email,
-        password,
-      });
-
-      // Redirect them to their dashboard
-      if (res.status === 200) {
-        navigate('/dashboard');
-      }
-
-    } catch (err: any) {
-      console.log(err);
-
-      if (err.response.status === 403){
-        setIsRegisterError(err.response.data)
-      } else {
-        setIsRegisterError('Something went wrong. Please try again.')
-      }    
-
+    
+    if (process.env.NODE_ENV === 'development') {
+      try {
+        const res = await axios.post('/register', {
+          email,
+          password,
+        });
+  
+        // Redirect them to their dashboard
+        if (res.status === 200) {
+          navigate('/dashboard');
+        }
+  
+      } catch (err: any) {
+        console.log(err);
+  
+        if (err.response.status === 403){
+          setIsRegisterError(err.response.data)
+        } else {
+          setIsRegisterError('Something went wrong. Please try again.')
+        }    
+      }      
+    } else {
+      navigate('/dashboard');
     }
-
-    // navigate('/dashboard');
   };
 
   return (

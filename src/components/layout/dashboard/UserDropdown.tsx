@@ -32,15 +32,19 @@ export default function UserDropdown(props: PopoverState) {
   ];
 
   const handleLogout = async () => {
-    try {
-      const res = await axios.post('/logout')
-
-      if (res.status === 200) {
-        setUserInfo(null)
-        navigate('/')
+    if (process.env.NODE_ENV === 'development') {
+      try {
+        const res = await axios.post('/logout')
+  
+        if (res.status === 200) {
+          setUserInfo(null)
+          navigate('/')
+        }
+      } catch (err) {
+        console.log(err)
       }
-    } catch (err) {
-      console.log(err)
+    } else { 
+      navigate('/')
     }
   }
 
