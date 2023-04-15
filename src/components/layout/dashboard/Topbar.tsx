@@ -17,7 +17,7 @@ export default function Topbar() {
 
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-
+  
   return (
     <Styled>
       <div>
@@ -26,7 +26,7 @@ export default function Topbar() {
             icon={faClock}
             style={{ fontSize: 30, color: '#fff' }}
           />
-          <p>TimeTracker</p>
+          <p>TimeTracker - {process.env.NODE_ENV}</p>
         </div>
 
         <div className={'menu-container'}>
