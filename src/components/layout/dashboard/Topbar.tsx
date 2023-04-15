@@ -26,7 +26,7 @@ export default function Topbar() {
             icon={faClock}
             style={{ fontSize: 30, color: '#fff' }}
           />
-          <p>TimeTracker - {process.env.NODE_ENV}</p>
+          <p>TimeTracker</p>
         </div>
 
         <div className={'menu-container'}>
@@ -47,9 +47,9 @@ export default function Topbar() {
       <div className={'right-section'}>
         <div>
           <span className={'user-name'}>
-            {`${userInfo?.firstName || 'Albert'} ${userInfo?.lastName || 'Johnson'}`}
+            {`${userInfo?.firstName} ${userInfo?.lastName}`}
           </span>
-          <p className={'user-title'}>{userInfo?.type || 'Admin'}</p>
+          <p className={'user-title'}>{userInfo?.type}</p>
         </div>
 
         <Popover

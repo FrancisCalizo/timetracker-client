@@ -26,25 +26,26 @@ export default function Login() {
 
     navigate('/dashboard');
 
-    // try {
-    //   const res = await axios.post(`/login`, {      
-    //     email,
-    //     password,
-    //   });
+    if (process.env.NODE_ENV === 'development') {
+      try {
+      const res = await axios.post(`/login`, {      
+        email,
+        password,
+      });
 
-    //   // Redirect them to their dashboard
-    //   if (res.status === 200) {
-    //   }
+      // Redirect them to their dashboard
+      if (res.status === 200) {
+      }
 
-    //   setIsLoginError(null)
-    // } catch (err: any) {
-    //   if (err.response.status === 403){
-    //     setIsLoginError(err.response.data)
-    //   } else {
-    //     setIsLoginError('Something went wrong. Please try again.')
-    //   }
-    // }
-
+      setIsLoginError(null)
+    } catch (err: any) {
+      if (err.response.status === 403){
+        setIsLoginError(err.response.data)
+      } else {
+        setIsLoginError('Something went wrong. Please try again.')
+      }
+    }
+    }
   };
 
   return (

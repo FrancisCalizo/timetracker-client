@@ -14,10 +14,10 @@ import Consultant from 'src/pages/Dashboard/Consultants/Consultant';
 import AddConsultant from 'src/pages/Dashboard/Consultants/AddConsultant';
 import Register from 'src/pages/Auth/Register'
 import Landing from 'src/pages/Home/Landing'
-// import ProtectedRoute from 'src/components/ProtectedRoute'
+import ProtectedRoute from 'src/components/ProtectedRoute'
 
 function App() {
-  const router = useRoutes([
+  const prodRoutes = useRoutes([
     { path: '/', element: <Landing /> },
     { path: '/login', element: <Login /> },
     { path: '/register', element: <Register /> },
@@ -38,9 +38,31 @@ function App() {
         ]},
     { path: '*', element: <h1>Page not found</h1> },
   ]);
+
+  const devRoutes = useRoutes([
+    { path: '/', element: <Landing /> },
+    { path: '/login', element: <Login /> },
+    { path: '/register', element: <Register /> },
+    { path: '/forgot-password', element: <ResetPassword /> },
+    { element: <ProtectedRoute />, 
+      children : [
+          { path: '/dashboard', children: [
+          { index: true, element: <Dashboard /> },
+          { path: 'clients/:id', element: <Client /> },
+          { path: 'clients/add-client', element: <AddClient /> },
+          { path: 'timesheets', element: <Timesheets /> },
+          { path: 'timesheets/:id', element: <Timesheet /> },
+          { path: 'timesheets/add-timesheet', element: <AddTimesheet /> },
+          { path: 'consultants/', element: <Consultants /> },
+          { path: 'consultants/add-consultant', element: <AddConsultant /> },
+          { path: 'consultants/:id', element: <Consultant /> },
+        ]}]
+    },
+    { path: '*', element: <h1>Page not found</h1> },
+  ]);
   return (
     <>
-      {router}
+      {process.env.NODE_ENV === 'development' ? devRoutes : prodRoutes}
       <Toaster />
     </>
   );

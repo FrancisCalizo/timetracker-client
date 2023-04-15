@@ -7,14 +7,17 @@ interface AppContextProps {
 }
 
 export type UserInfo = {
-  id: number;
-  first_name: string;
-  last_name: string;
-  email: string;
+  id: number,
+  firstName: string,
+  lastName: string,
+  email: string,
+  type: string
 };
 
+const USER_INFO_DEFAULTS = { id: 1, firstName: 'Albert', lastName: 'Johnson', type: 'Admin', email: 'test@test.com'}
+
 export default function AppProvider({ children }: AppContextProps) {
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const [userInfo, setUserInfo] = useState<UserInfo>(USER_INFO_DEFAULTS);
 
   return (
     <AppContext.Provider value={{ userInfo, setUserInfo }}>
