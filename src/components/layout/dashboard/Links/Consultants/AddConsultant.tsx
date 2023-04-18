@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import BackToLink from 'src/components/layout/dashboard/BackToLink';
 import { useConsultant } from 'src/context/consultantContext';
+import { useAppContext } from 'src/context/appContext';
 
 export type FormValues = {
   consultantId: string;
@@ -13,6 +14,10 @@ export type FormValues = {
   email: string;
   rate: number;
 };
+
+interface StyledProps {
+  themeColor: string;
+}
 
 export default function AddConsultant() {
   const {
@@ -23,6 +28,7 @@ export default function AddConsultant() {
 
   const navigate = useNavigate();
   const { setConsultantList } = useConsultant();
+  const { themeColor } = useAppContext()
 
   const onSubmit = (data: FormValues) => {
     const { consultantId, consultantName, email, rate } = data;
@@ -44,7 +50,7 @@ export default function AddConsultant() {
   };
 
   return (
-    <Styled>
+    <Styled themeColor={themeColor}>
       <div style={{ maxWidth: 200 }}>
         <BackToLink
           to="/dashboard/consultants"
@@ -144,7 +150,7 @@ export default function AddConsultant() {
   );
 }
 
-const Styled = styled.div`
+const Styled = styled.div<StyledProps>`
   .page-container {
     display: flex;
     flex-direction: column;
@@ -193,7 +199,7 @@ const Styled = styled.div`
   }
 
   .input-label {
-    color: ${(props) => props.theme.colors.primary};
+    color: ${(props) => props.theme.colors[props.themeColor]};
     font-size: 0.75rem;
     font-weight: 600;
   }
@@ -232,7 +238,7 @@ const Styled = styled.div`
   }
 
   .add {
-    background: ${(props) => props.theme.colors.primary};
+    background: ${(props) => props.theme.colors[props.themeColor]};
     color: white;
     border: 0.5px solid white;
     padding: 0.75rem 3rem;

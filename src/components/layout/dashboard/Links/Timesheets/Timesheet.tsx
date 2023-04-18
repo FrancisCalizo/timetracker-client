@@ -26,6 +26,11 @@ import {
   validationSchema,
 } from 'src/components/layout/dashboard/Links/Timesheets/utils/types';
 import { selectStyles } from 'src/components/layout/dashboard/Links/Timesheets/AddTimesheet';
+import { useAppContext } from 'src/context/appContext';
+
+interface StyledProps {
+  themeColor: string;
+}
 
 export default function Timesheet() {
   const navigate = useNavigate();
@@ -48,6 +53,8 @@ export default function Timesheet() {
     name: 'timesheets',
     control,
   });
+
+  const { themeColor } = useAppContext()
 
   const watchIsFixedRate = watch('isFixedRate', false);
   const isFirstRef = React.useRef(true);
@@ -126,7 +133,7 @@ export default function Timesheet() {
   };
 
   return (
-    <Styled>
+    <Styled themeColor={themeColor}>
       <div style={{ maxWidth: 200 }}>
         <BackToLink to="/dashboard/timesheets" text="Back to Timesheet List" />
       </div>
@@ -425,7 +432,7 @@ export default function Timesheet() {
   );
 }
 
-const Styled = styled.div`
+const Styled = styled.div<StyledProps>`
   .page-container {
     display: flex;
     flex-direction: column;
@@ -472,7 +479,7 @@ const Styled = styled.div`
       }
 
       & > svg {
-        color: ${(props) => props.theme.colors.primary};
+        color: ${(props) => props.theme.colors[props.themeColor]};
         font-size: 1.5rem;
       }
     }
@@ -507,7 +514,7 @@ const Styled = styled.div`
   }
 
   .input-label {
-    color: ${(props) => props.theme.colors.primary};
+    color: ${(props) => props.theme.colors[props.themeColor]};
     font-size: 0.75rem;
     font-weight: 600;
   }
@@ -570,7 +577,7 @@ const Styled = styled.div`
     width: 120;
     margin: 0 1rem 0 -5px;
     padding-top: 15px;
-    color: ${(props) => props.theme.colors.primary};
+    color: ${(props) => props.theme.colors[props.themeColor]};
 
     & input {
       width: 20px;
@@ -621,7 +628,7 @@ const Styled = styled.div`
   }
 
   .save {
-    background: ${(props) => props.theme.colors.primary};
+    background: ${(props) => props.theme.colors[props.themeColor]};
     color: white;
     border: 0.5px solid white;
     padding: 0.75rem 3rem;

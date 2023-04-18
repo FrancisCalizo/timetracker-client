@@ -12,10 +12,12 @@ import ViewEditTableButtons from 'src/components/layout/dashboard/ViewEditTableB
 import { TableStyles } from 'src/components/layout/dashboard/Links/Timesheets/TimesheetsTable';
 import { TableInstanceWithHooks } from 'src/components/layout/dashboard/Links/Timesheets/TimesheetsTable';
 import TablePagination from 'src/components/layout/dashboard/TablePagination';
+import { useAppContext } from 'src/context/appContext';
 import { formatCurrency } from 'src/utils';
 
 function ConsultantTable() {
   const { consultantList } = useConsultant();
+  const { themeColor } = useAppContext()
 
   const columns: any = useMemo(
     () => [
@@ -61,7 +63,7 @@ function ConsultantTable() {
   ) as TableInstanceWithHooks<any>;
 
   return (
-    <TableStyles>
+    <TableStyles themeColor={themeColor}>
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (

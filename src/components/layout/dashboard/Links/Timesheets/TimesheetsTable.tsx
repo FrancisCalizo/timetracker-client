@@ -21,6 +21,7 @@ import { useTimesheets } from 'src/context/timesheetsContext';
 import { formatCurrency } from 'src/utils';
 import ViewEditTableButtons from '../../ViewEditTableButtons';
 import TablePagination from 'src/components/layout/dashboard/TablePagination';
+import { useAppContext } from 'src/context/appContext';
 
 export type TableInstanceWithHooks<T extends object> = TableInstance<T> &
   UsePaginationInstanceProps<T> &
@@ -28,8 +29,13 @@ export type TableInstanceWithHooks<T extends object> = TableInstance<T> &
     state: UsePaginationState<T>;
   };
 
+interface StyledProps {
+  themeColor: string;
+}
+
 function TimesheetsTable() {
   const { timesheetsList } = useTimesheets();
+  const { themeColor } = useAppContext()
 
   const columns: any = useMemo(
     () => [
@@ -142,7 +148,7 @@ function TimesheetsTable() {
   ) as TableInstanceWithHooks<any>;
 
   return (
-    <TableStyles>
+    <TableStyles themeColor={themeColor}>
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -219,7 +225,7 @@ function TimesheetsTable() {
 
 export default TimesheetsTable;
 
-export const TableStyles = styled.div`
+export const TableStyles = styled.div<StyledProps>`
   display: block;
   max-width: 100%;
 
@@ -236,7 +242,7 @@ export const TableStyles = styled.div`
     border-spacing: 0;
 
     thead {
-      background: #ff6b6b;
+      background: ${(props) => props.theme.colors[props.themeColor]};
       color: #fff;
     }
 

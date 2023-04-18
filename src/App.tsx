@@ -13,6 +13,7 @@ import Consultants from 'src/pages/Dashboard/Consultants';
 import Consultant from 'src/pages/Dashboard/Consultants/Consultant';
 import AddConsultant from 'src/pages/Dashboard/Consultants/AddConsultant';
 import Settings from 'src/pages/Dashboard/Settings';
+import Preferences from 'src/pages/Dashboard/Settings/Preferences';
 import Register from 'src/pages/Auth/Register'
 import Landing from 'src/pages/Home/Landing'
 import ProtectedRoute from 'src/components/ProtectedRoute'
@@ -37,6 +38,7 @@ function App() {
           { path: 'consultants/add-consultant', element: <AddConsultant /> },
           { path: 'consultants/:id', element: <Consultant /> },
           { path: 'settings', element: <Settings /> },
+          { path: 'settings/preferences', element: <Preferences /> },
         ]},
     { path: '*', element: <h1>Page not found</h1> },
   ]);
@@ -59,7 +61,8 @@ function App() {
           { path: 'consultants/add-consultant', element: <AddConsultant /> },
           { path: 'consultants/:id', element: <Consultant /> },
           { path: 'settings', element: <Settings /> },
-        ]}]
+          { path: 'settings/preferences', element: <Preferences /> },
+      ]}]
     },
     { path: '*', element: <h1>Page not found</h1> },
   ]);

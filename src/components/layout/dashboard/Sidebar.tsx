@@ -11,6 +11,11 @@ import { useLocation, Link } from 'react-router-dom';
 import classnames from 'classnames'
 
 import { getPathName } from 'src/utils';
+import { useAppContext } from 'src/context/appContext';
+
+interface StyledProps {
+  themeColor: string;
+}
 
 export const MENU_LINKS = [
   { title: 'Clients', url: 'clients', icon: faUsers },
@@ -21,6 +26,7 @@ export const MENU_LINKS = [
 
 export default function Sidebar() {
   const location = useLocation();
+  const { themeColor } = useAppContext()
 
   const [currentRoute, setCurrentRoute] = useState<any>(null);
 
@@ -29,7 +35,7 @@ export default function Sidebar() {
   }, [location.pathname]);
 
   return (
-    <Styled>
+    <Styled themeColor={themeColor}>
       <div className={'sidebar-links'}>
         {MENU_LINKS.map(
           (link: { title: string; url: string; icon: any }, key: number) => {
@@ -64,7 +70,7 @@ export default function Sidebar() {
   );
 }
 
-const Styled = styled.div`
+const Styled = styled.div<StyledProps>`
   background: #fff;
   display: flex;
   flex-direction: column;
@@ -100,7 +106,7 @@ const Styled = styled.div`
 
     &:hover {
       filter: brightness(120%);
-      background: ${(props) => props.theme.colors.primary};
+      background: ${(props) => props.theme.colors[props.themeColor]};
       cursor: pointer;
       color: #fff;
     }  
@@ -132,6 +138,6 @@ const Styled = styled.div`
 
   .g-link-current {
     color: #fff;
-    background: ${(props) => props.theme.colors.primary};
+    background: ${(props) => props.theme.colors[props.themeColor]};
 }
 `

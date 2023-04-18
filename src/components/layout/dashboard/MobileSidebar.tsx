@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock } from '@fortawesome/free-solid-svg-icons';
 
 import { MENU_LINKS } from 'src/components/layout/dashboard/Sidebar';
+import { useAppContext } from 'src/context/appContext';
 import { getPathName } from 'src/utils';
 
 interface MobileSidebarProps {
@@ -13,10 +14,16 @@ interface MobileSidebarProps {
   setIsBurgerOpen: any;
 }
 
+interface StyledProps {
+  themeColor: string;
+}
+
 export default function MobileSidebar({
   isBurgerOpen,
   setIsBurgerOpen,
 }: MobileSidebarProps) {
+  const { themeColor } = useAppContext()
+
   const [currentRoute, setCurrentRoute] = useState<any>(null);
 
   // useEffect(() => {
@@ -62,7 +69,7 @@ export default function MobileSidebar({
   };
 
   return (
-    <Styled>
+    <Styled themeColor={themeColor}>
       <Menu
         styles={menuStyles}
         onStateChange={(status: any) => setIsBurgerOpen(status.isOpen)}
@@ -109,10 +116,10 @@ export default function MobileSidebar({
   );
 }
 
-const Styled = styled.div`
+const Styled = styled.div<StyledProps>`
   .burger-container {
     background: #fff;
-    color: ${(props) => props.theme.colors.primary};
+    color: ${(props) => props.theme.colors[props.themeColor]};
   }
 
   .burger-container > a {
@@ -122,7 +129,7 @@ const Styled = styled.div`
 
   .burger-container-current {
     color: #fff;
-    background: ${(props) => props.theme.colors.primary};
+    background: ${(props) => props.theme.colors[props.themeColor]};
   }
 
   .logo-container {

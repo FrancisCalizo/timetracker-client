@@ -16,6 +16,7 @@ import { useForm, Controller, useFieldArray } from 'react-hook-form';
 import WeekPicker from 'src/components/WeekPicker';
 import BackToLink from 'src/components/layout/dashboard/BackToLink';
 import { useTimesheets } from 'src/context/timesheetsContext';
+import { useAppContext } from 'src/context/appContext';
 import {
   DEFAULT_WEEK,
   FormValues,
@@ -24,6 +25,10 @@ import {
   SELECT_OPTIONS,
   validationSchema,
 } from './utils/types';
+
+interface StyledProps {
+  themeColor: string;
+}
 
 export default function AddClient() {
   const navigate = useNavigate();
@@ -41,6 +46,7 @@ export default function AddClient() {
     defaultValues: { rate: 0 },
   });
 
+  const { themeColor } = useAppContext()
   const { fields, append } = useFieldArray({
     name: 'timesheets',
     control,
@@ -104,7 +110,7 @@ export default function AddClient() {
   };
 
   return (
-    <Styled>
+    <Styled themeColor={themeColor}>
       <div style={{ maxWidth: 200 }}>
         <BackToLink to="/dashboard/timesheets" text="Back to Timesheet List" />
       </div>
@@ -409,7 +415,7 @@ export const selectStyles = {
   }),
 };
 
-const Styled = styled.div`
+const Styled = styled.div<StyledProps>`
   .page-container {
    display: flex;
    flex-direction: column;
@@ -468,7 +474,7 @@ const Styled = styled.div`
  }
 
  .input-label {
-   color: ${(props) => props.theme.colors.primary};
+   color: ${(props) => props.theme.colors[props.themeColor]};
    font-size: 0.75rem;
    font-weight: 600;
  }
@@ -531,7 +537,7 @@ const Styled = styled.div`
    width: 120;
    margin: 0 1rem 0 -5px;
    padding-top: 15px;
-   color: ${(props) => props.theme.colors.primary};
+   color: ${(props) => props.theme.colors[props.themeColor]};
 
    & input {
      width: 20px;
@@ -584,7 +590,7 @@ const Styled = styled.div`
  }
 
  .add {
-   background: ${(props) => props.theme.colors.primary};
+   background: ${(props) => props.theme.colors[props.themeColor]};
    color: white;
    border: 0.5px solid white;
    padding: 0.75rem 3rem;

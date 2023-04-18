@@ -18,9 +18,10 @@ const USER_INFO_DEFAULTS = { id: 1, firstName: 'Albert', lastName: 'Johnson', ty
 
 export default function AppProvider({ children }: AppContextProps) {
   const [userInfo, setUserInfo] = useState<UserInfo>(USER_INFO_DEFAULTS);
+  const [themeColor, setThemeColor] = useState('#ff6b6b')
 
   return (
-    <AppContext.Provider value={{ userInfo, setUserInfo }}>
+    <AppContext.Provider value={{ userInfo, setUserInfo, themeColor, setThemeColor }}>
       {children}
     </AppContext.Provider>
   );

@@ -4,14 +4,21 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from 'axios'
 
+import { useAppContext } from 'src/context/appContext';
+
 type FormValues = {
   email: string;
   password: string;
 };
 
+interface StyledProps {
+  themeColor: string;
+}
+
 
 export default function Login() {
   const navigate = useNavigate();
+  const { themeColor } = useAppContext()
 
   const {
     register,
@@ -49,7 +56,7 @@ export default function Login() {
   };
 
   return (
-  <Styled>
+  <Styled themeColor={themeColor}>
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={'page-container'}>
         <div className={'form-container'}>
@@ -110,7 +117,7 @@ export default function Login() {
   );
 }
 
-const Styled = styled.div`
+const Styled = styled.div<StyledProps>`
   .page-container {
     height: 100vh;
     display: flex;
@@ -176,7 +183,7 @@ const Styled = styled.div`
     text-align: center;
     font-size: 0.85rem;
     margin: 0.25rem;
-    color: ${(props) => props.theme.colors.primary};
+    color: ${(props) => props.theme.colors[props.themeColor]};
     text-decoration: none;
   }
 
@@ -185,7 +192,7 @@ const Styled = styled.div`
     text-align: center;
     font-size: 0.8rem;
     margin: 0.25rem;
-    color: ${(props) => props.theme.colors.primary};
+    color: ${(props) => props.theme.colors[props.themeColor]};
     margin: 0 auto 1rem;
     text-decoration: none;
   }
@@ -193,7 +200,7 @@ const Styled = styled.div`
   .login-button {
     display: block;
     width: 100%;
-    background: ${(props) => props.theme.colors.primary};
+    background: ${(props) => props.theme.colors[props.themeColor]};
     color: white;
     border: 0.5px solid white;
     padding: ${(props) => props.theme.input.padding};

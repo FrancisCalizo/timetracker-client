@@ -12,14 +12,19 @@ import { useAppContext } from 'src/context/appContext';
 import MobileSidebar from './MobileSidebar';
 import UserDropdown from './UserDropdown';
 
+interface StyledProps {
+  themeColor: string;
+}
+
 export default function Topbar() {
   const { userInfo } = useAppContext()
+  const { themeColor } = useAppContext()
 
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   
   return (
-    <Styled>
+    <Styled themeColor={themeColor}>
       <div>
         <div className={'logo-container'}>
           <FontAwesomeIcon
@@ -75,7 +80,7 @@ export default function Topbar() {
   );
 }
 
-const Styled = styled.div`
+const Styled = styled.div<StyledProps>`
   position: fixed;
   top: 0;
   width: 100%;
@@ -83,7 +88,7 @@ const Styled = styled.div`
   text-transform: uppercase;
   font-size: 1.2rem;
   background: linear-gradient(0deg, rgba(36, 31, 33, 1) 0%, rgba(41, 35, 37, 1) 48%, rgba(55, 47, 50, 1) 100%);
-  border-bottom: 2px solid var(--color-primary);
+  border-bottom: ${(props) => `2px solid ${props.theme.colors[props.themeColor]}`};
   transition: all 500ms ease-in-out;
   display: flex;
   justify-content: space-between;

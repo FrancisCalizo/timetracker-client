@@ -8,7 +8,7 @@ export default function Settings() {
    { 
      label: 'General',
      icon: faGear,
-     url: 'general',
+     url: null,
      description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat, rerum!'
    },
    { 
@@ -20,7 +20,7 @@ export default function Settings() {
    { 
      label: 'Security',
      icon: faLock,
-     url: 'security',
+     url: null,
      description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat, rerum!'
    },
  ]
@@ -37,7 +37,7 @@ export default function Settings() {
             const icon = link.icon;
 
             return (
-               <Link to={`/dashboard/settings/${link.url}`}>
+               <Link to={link.url ? `/dashboard/settings/${link.url}` : '#'}>
                   <li>
                     <FontAwesomeIcon
                       icon={icon}
@@ -67,7 +67,7 @@ const Styled = styled.div`
     color: ${(props) => props.theme.colors.textPrimary};
   }
 
- .list-section {
+  .list-section {
     & a { color: inherit; }
     
     & ul { 

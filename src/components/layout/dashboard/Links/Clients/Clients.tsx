@@ -4,10 +4,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import ClientTable from './ClientTable';
+import { useAppContext } from 'src/context/appContext';
+
+interface StyledProps {
+  themeColor: string;
+}
 
 export default function Clients() {
+  const { themeColor } = useAppContext()
+
   return (
-    <Styled>
+    <Styled themeColor={themeColor}>
       <div className={'title-container'}>
         <h1>Clients</h1>
         <Link to="/dashboard/clients/add-client" >
@@ -25,7 +32,7 @@ export default function Clients() {
   );
 }
 
-const Styled = styled.div`
+const Styled = styled.div<StyledProps>`
   .title-container {
     display: flex;
     justify-content: space-between;
@@ -52,7 +59,7 @@ const Styled = styled.div`
   .add-client {
     display: block;
     width: 100%;
-    background: ${(props) => props.theme.colors.primary};
+    background: ${(props) => props.theme.colors[props.themeColor]};
     color: white;
     border: 0.5px solid white;
     padding: 0.75rem 1rem;
