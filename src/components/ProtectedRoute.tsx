@@ -34,18 +34,29 @@ const PrivateRoute = () => {
             delete user.exp;
             delete user.iat;
 
-            const res = await axios.get(`/getUserInfo/${user.id}`)
-            
-            if (res.status === 200) {
-              
+            const o = user.email
+            const tempName = o.substring(0, o.indexOf('@'))
+
               setUserInfo({
-                id: res.data.id,
-                firstName: res.data.firstname,
-                lastName: res.data.lastname,
-                email: res.data.email,
-                type: res.data.type
+                id: 1,
+                firstName: tempName,
+                lastName: tempName,
+                email: o,
+                type: tempName
               })
-            }
+
+            // const res = await axios.get(`/getUserInfo/${user.id}`)
+
+            // if (res.status === 200) {
+              
+            //   setUserInfo({
+            //     id: res.data.id,
+            //     firstName: res.data.firstname,
+            //     lastName: res.data.lastname,
+            //     email: res.data.email,
+            //     type: res.data.type
+            //   })
+            // }
           }
         }
 

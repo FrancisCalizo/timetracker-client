@@ -1,10 +1,12 @@
 import * as React from 'react'
+import Select from 'react-select';
 import styled from 'styled-components';
 import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from 'axios'
 
 import { useAppContext } from 'src/context/appContext';
+import { selectStyles } from 'src/components/layout/dashboard/Links/Timesheets/AddTimesheet';
 
 type FormValues = {
   email: string;
@@ -14,6 +16,12 @@ type FormValues = {
 interface StyledProps {
   themeColor: string;
 }
+
+export const SELECT_OPTIONS = [
+  { value: 'admin', label: 'Admin' },
+  { value: 'client', label: 'Client' },
+  { value: 'candidate', label: 'Candidate' },
+];
 
 
 export default function Login() {
@@ -27,32 +35,42 @@ export default function Login() {
   } = useForm<FormValues>();
 
   const [isLoginError, setIsLoginError] = React.useState<string | null>(null)
+  const [tempLogin, setTempLogin] = React.useState('')
 
   const onSubmit = async (data: FormValues) => {    
-    const { email, password } = data;
+    // const { email, password } = data;
 
-    navigate('/dashboard');
+    let email, password
+    
+    if (tempLogin) {
+      const type = tempLogin
 
+      email = `${type}@${type}.com`
+      password = type
+    }
+    
     if (process.env.NODE_ENV === 'development') {
       try {
-      const res = await axios.post(`/login`, {      
-        email,
-        password,
-      });
-
-      // Redirect them to their dashboard
-      if (res.status === 200) {
-      }
-
-      setIsLoginError(null)
-    } catch (err: any) {
-      if (err.response.status === 403){
-        setIsLoginError(err.response.data)
-      } else {
-        setIsLoginError('Something went wrong. Please try again.')
+        const res = await axios.post(`/login`, {      
+          email,
+          password,
+        });
+        
+        // Redirect them to their dashboard
+        if (res.status === 200) {
+        }
+        
+        setIsLoginError(null)
+      } catch (err: any) {
+        if (err.response.status === 403){
+          setIsLoginError(err.response.data)
+        } else {
+          setIsLoginError('Something went wrong. Please try again.')
+        }
       }
     }
-    }
+
+    navigate('/dashboard');
   };
 
   return (
@@ -70,7 +88,16 @@ export default function Login() {
           </Link>
           <div className={'grid-container'}>
             <div className={'input-container'}>
-              <input
+              <Select           
+                options={SELECT_OPTIONS}
+                placeholder="User Type"
+                isSearchable={false}
+                styles={selectStyles}
+                instanceId="userType"
+                onChange={(val: any) => setTempLogin(val.value)}
+              />
+
+              {/* <input
                 className={'input'}
                 type="text"
                 placeholder="Email"
@@ -82,10 +109,10 @@ export default function Login() {
                 <div className={'error-message'}>
                   {errors.email.message}
                 </div>
-              )}
+              )} */}
             </div>
 
-            <div className={'input-container'}>
+            {/* <div className={'input-container'}>
               <input
                 className={'input'}
                 type="password"
@@ -99,12 +126,12 @@ export default function Login() {
                   {errors.password.message}
                 </div>
               )}
-            </div>
+            </div> */}
             <Link to="/forgot-password" className={'forgot-password'}>
               Forgot your password?
             </Link>
 
-            <button className={'login-button'}>Login</button>
+            <button className={'login-button'} disabled={!tempLogin}>Login</button>
 
             <p className={'login-error'}>
               {isLoginError && isLoginError}
@@ -205,14 +232,23 @@ const Styled = styled.div<StyledProps>`
     border: 0.5px solid white;
     padding: ${(props) => props.theme.input.padding};
     border-radius: 6px;
-    font-size: ${(props) => props.theme.input.fontSize};
-    cursor: pointer;
+    font-size: ${(props) => props.theme.input.fontSize};    
     box-shadow: ${(props) => props.theme.button.boxShadow};
     transition: background 300ms ease-in-out, transform 150ms ease-in-out,
       filter 150ms ease-in-out;
+
+    &:enabled {
+      cursor: pointer;
+    }
+
+    &:disabled {
+      background: gainsboro;
+      opacity: 9;
+
+    }
   }
 
-  .login-button:hover {
+  .login-button:hover:enabled {
     filter: brightness(85%);
   }
 
