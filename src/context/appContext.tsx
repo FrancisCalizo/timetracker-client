@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
 export const AppContext = createContext<any>(null);
 
@@ -14,12 +14,25 @@ export type UserInfo = {
   type: string
 };
 
-const USER_INFO_DEFAULTS = { id: 1, firstName: 'Albert', lastName: 'Johnson', type: 'Admin', email: 'test@test.com'}
+const USER_INFO_DEFAULTS_ADMIN = { id: 11, firstName: 'ADMIN', lastName: 'ADMIN', type: 'Admin', email: 'admin@admin.com'}
+const USER_INFO_DEFAULTS_CLIENT = { id: 9, firstName: 'CLIENT', lastName: 'CLIENT', type: 'Client', email: 'client@client.com'}
+const USER_INFO_DEFAULTS_CANDIDATE = { id: 10, firstName: 'CANDIDATE', lastName: 'CANDIDATE', type: 'Candidate', email: 'candidate@candidate.com'}
+
+const USER_DEFAULTS = { admin: USER_INFO_DEFAULTS_ADMIN, client: USER_INFO_DEFAULTS_CLIENT, candidate: USER_INFO_DEFAULTS_CANDIDATE }
 
 export default function AppProvider({ children }: AppContextProps) {
-  const [userInfo, setUserInfo] = useState<UserInfo>(USER_INFO_DEFAULTS);
+  const [userInfo, setUserInfo] = useState<UserInfo>(USER_INFO_DEFAULTS_ADMIN);
   const [themeColor, setThemeColor] = useState('primary')
 
+  useEffect(() => {
+    const type = localStorage.getItem('type')
+
+    if (type) {
+      // @ts-ignore
+      setUserInfo(USER_DEFAULTS[type])
+    }
+  }, [])
+  
   return (
     <AppContext.Provider value={{ userInfo, setUserInfo, themeColor, setThemeColor }}>
       {children}

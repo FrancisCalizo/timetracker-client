@@ -35,6 +35,8 @@ export default function UserDropdown(props: PopoverState) {
     if (process.env.NODE_ENV === 'development') {
       try {
         const res = await axios.post('/logout')
+
+        localStorage.removeItem("type");
   
         if (res.status === 200) {
           setUserInfo(null)

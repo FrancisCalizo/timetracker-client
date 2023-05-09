@@ -47,6 +47,8 @@ export default function Login() {
 
       email = `${type}@${type}.com`
       password = type
+
+      localStorage.setItem("type", type);
     }
     
     if (process.env.NODE_ENV === 'development') {
