@@ -12,21 +12,23 @@ import classnames from 'classnames'
 
 import { getPathName } from 'src/utils';
 import { useAppContext } from 'src/context/appContext';
+import AccessControl from 'src/components/AccessControl';
 
 interface StyledProps {
   themeColor: string;
 }
 
 export const MENU_LINKS = [
-  { title: 'Clients', url: 'clients', icon: faUsers },
-  { title: 'Timesheets', url: 'timesheets', icon: faBusinessTime },
-  { title: 'Consultants', url: 'consultants', icon: faUser },
-  { title: 'Settings', url: 'settings', icon: faCog, section: 'BOTTOM' },
+  { title: 'Clients', url: 'clients', icon: faUsers, allowedPermissions: ['admin'] },
+  { title: 'Projects', url: 'projects', icon: faUsers, allowedPermissions: ['admin', 'candidate'] },
+  { title: 'Timesheets', url: 'timesheets', icon: faBusinessTime, allowedPermissions: ['admin', 'candidate', 'client'] },
+  { title: 'Consultants', url: 'consultants', icon: faUser, allowedPermissions: ['admin', 'client'] },
+  { title: 'Settings', url: 'settings', icon: faCog, section: 'BOTTOM', allowedPermissions: ['admin', 'candidate', 'client'] },
 ];
 
 export default function Sidebar() {
   const location = useLocation();
-  const { themeColor } = useAppContext()
+  const { themeColor, userInfo } = useAppContext()
 
   const [currentRoute, setCurrentRoute] = useState<any>(null);
 
@@ -38,30 +40,38 @@ export default function Sidebar() {
     <Styled themeColor={themeColor}>
       <div className={'sidebar-links'}>
         {MENU_LINKS.map(
-          (link: { title: string; url: string; icon: any }, key: number) => {
+          (link: { title: string; url: string; icon: any; allowedPermissions?: any }, key: number) => {
             const isCurrent =
               currentRoute === undefined && link.url === MENU_LINKS[0].url
                 ? true
                 : currentRoute === link.url.toLowerCase();
+
+            const allowedPermissions = link.allowedPermissions
+
             return (
-              <Link
-                className={classnames('g-link', isCurrent && 'g-link-current')}
+              <AccessControl
                 key={key}
-                to={
-                  key === 0
-                    ? '/dashboard'
-                    : `/dashboard/${link.url.toLowerCase()}`
-                }                
+                userPermissions={[userInfo.type]}
+                allowedPermission={allowedPermissions}
               >
-                <li
-                  className={classnames('li-link', isCurrent && 'li-link-current')}
+                <Link
+                  className={classnames('g-link', isCurrent && 'g-link-current')}
+                  to={
+                    key === 0
+                      ? '/dashboard'
+                      : `/dashboard/${link.url.toLowerCase()}`
+                  }                
                 >
-                  <FontAwesomeIcon icon={link.icon} />
-                  <div style={{ textTransform: 'capitalize' }}>
-                    {link.title}
-                  </div>
-                </li>
-              </Link>
+                  <li
+                    className={classnames('li-link', isCurrent && 'li-link-current')}
+                  >
+                    <FontAwesomeIcon icon={link.icon} />
+                    <div style={{ textTransform: 'capitalize' }}>
+                      {link.title}
+                    </div>
+                  </li>
+                </Link>
+              </AccessControl>
             );
           }
         )}
