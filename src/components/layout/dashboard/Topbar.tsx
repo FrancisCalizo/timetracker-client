@@ -142,4 +142,10 @@ const Styled = styled.div<StyledProps>`
       display: none;
     }
   }
+
+  @media (min-width: 560px) and (max-width: 769px){
+      .menu-container {
+        padding-left: 24px;
+      }      
+    }
 `

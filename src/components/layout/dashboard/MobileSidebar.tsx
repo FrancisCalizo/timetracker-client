@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock } from '@fortawesome/free-solid-svg-icons';
 
 import { MENU_LINKS } from 'src/components/layout/dashboard/Sidebar';
+import AccessControl from 'src/components/AccessControl';
 import { useAppContext } from 'src/context/appContext';
 import { getPathName } from 'src/utils';
 
@@ -22,7 +23,7 @@ export default function MobileSidebar({
   isBurgerOpen,
   setIsBurgerOpen,
 }: MobileSidebarProps) {
-  const { themeColor } = useAppContext()
+  const { themeColor, userInfo } = useAppContext()
 
   const [currentRoute, setCurrentRoute] = useState<any>(null);
 
@@ -86,29 +87,36 @@ export default function MobileSidebar({
           <p>TimeTracker</p>
         </div>
 
-        {MENU_LINKS.map((link: { title: string; url: string }, key: number) => {
+        {MENU_LINKS.map((link: { title: string; url: string, allowedPermissions?: any }, key: number) => {
           const isCurrent =
-          currentRoute === undefined && link.url === MENU_LINKS[0].url
-          ? true
-          : currentRoute === link.url.toLowerCase();
+            currentRoute === undefined && link.url === MENU_LINKS[0].url
+            ? true
+            : currentRoute === link.url.toLowerCase();
           
-          return (
-            <div
-            className={classnames('burger-container', isCurrent && 'burger-container-current')}
+          const allowedPermissions = link.allowedPermissions
 
-            key={key}
-            >
-              <a
-                className="menu-item"
-                href={
-                  key === 0
-                  ? '/dashboard'
-                  : `/dashboard/${link.url.toLowerCase()}`
-                }
-                >
-                {link.title}
-              </a>
-            </div>
+          return (
+            <AccessControl
+                key={key}
+                userPermissions={[userInfo?.type]}
+                allowedPermission={allowedPermissions}
+              >
+              <div
+                className={classnames('burger-container', isCurrent && 'burger-container-current')}
+                key={key}
+              >
+                <a
+                  className="menu-item"
+                  href={
+                    key === 0
+                    ? '/dashboard'
+                    : `/dashboard/${link.url.toLowerCase()}`
+                  }
+                  >
+                  {link.title}
+                </a>
+              </div>
+            </AccessControl>
           );
         })}
       </Menu>
