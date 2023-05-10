@@ -54,7 +54,7 @@ export default function Login() {
     const isDev = process.env.NODE_ENV === 'development'
 
     // Using backend
-    if (!isDev) {
+    if (isDev) {
       try {
         const res = await axios.post(`/login`, {      
           email,
@@ -62,8 +62,7 @@ export default function Login() {
         });
         
         // Redirect them to their dashboard
-        if (res.status === 200) {
-        }
+        if (res.status === 200) {}
         
         setIsLoginError(null)
       } catch (err: any) {
@@ -76,7 +75,7 @@ export default function Login() {
     }
 
     // Not using backend - demo site
-    if (isDev) {
+    if (!isDev) {
       if (type) {
         // @ts-ignore
         setUserInfo(USER_DEFAULTS[type])
