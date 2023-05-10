@@ -7,6 +7,7 @@ import axios from 'axios'
 
 import { useAppContext } from 'src/context/appContext';
 import { selectStyles } from 'src/components/layout/dashboard/Links/Timesheets/AddTimesheet';
+import { USER_DEFAULTS } from 'src/context/appContext';
 
 type FormValues = {
   email: string;
@@ -26,7 +27,7 @@ export const SELECT_OPTIONS = [
 
 export default function Login() {
   const navigate = useNavigate();
-  const { themeColor } = useAppContext()
+  const { themeColor, setUserInfo } = useAppContext()
 
   const {
     register,
@@ -41,17 +42,19 @@ export default function Login() {
     // const { email, password } = data;
 
     let email, password
+    const type = tempLogin
     
-    if (tempLogin) {
-      const type = tempLogin
-
+    if (type) {
       email = `${type}@${type}.com`
       password = type
 
       localStorage.setItem("type", type);
     }
     
-    if (process.env.NODE_ENV === 'development') {
+    const isDev = process.env.NODE_ENV === 'development'
+
+    // Using backend
+    if (!isDev) {
       try {
         const res = await axios.post(`/login`, {      
           email,
@@ -69,6 +72,14 @@ export default function Login() {
         } else {
           setIsLoginError('Something went wrong. Please try again.')
         }
+      }
+    }
+
+    // Not using backend - demo site
+    if (isDev) {
+      if (type) {
+        // @ts-ignore
+        setUserInfo(USER_DEFAULTS[type])
       }
     }
 

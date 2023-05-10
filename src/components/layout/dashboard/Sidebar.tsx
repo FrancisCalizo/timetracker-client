@@ -51,7 +51,7 @@ export default function Sidebar() {
             return (
               <AccessControl
                 key={key}
-                userPermissions={[userInfo.type]}
+                userPermissions={[userInfo?.type]}
                 allowedPermission={allowedPermissions}
               >
                 <Link

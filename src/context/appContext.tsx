@@ -18,7 +18,7 @@ const USER_INFO_DEFAULTS_ADMIN = { id: 11, firstName: 'ADMIN', lastName: 'ADMIN'
 const USER_INFO_DEFAULTS_CLIENT = { id: 9, firstName: 'CLIENT', lastName: 'CLIENT', type: 'client', email: 'client@client.com'}
 const USER_INFO_DEFAULTS_CANDIDATE = { id: 10, firstName: 'CANDIDATE', lastName: 'CANDIDATE', type: 'candidate', email: 'candidate@candidate.com'}
 
-const USER_DEFAULTS = { admin: USER_INFO_DEFAULTS_ADMIN, client: USER_INFO_DEFAULTS_CLIENT, candidate: USER_INFO_DEFAULTS_CANDIDATE }
+export const USER_DEFAULTS = { admin: USER_INFO_DEFAULTS_ADMIN, client: USER_INFO_DEFAULTS_CLIENT, candidate: USER_INFO_DEFAULTS_CANDIDATE }
 
 export default function AppProvider({ children }: AppContextProps) {
   const [userInfo, setUserInfo] = useState<UserInfo>(USER_INFO_DEFAULTS_ADMIN);
