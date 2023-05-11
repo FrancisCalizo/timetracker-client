@@ -51,7 +51,11 @@ export default function Login() {
       localStorage.setItem("type", type);      
       
       // @ts-ignore
-      setUserInfo(USER_DEFAULTS[type])
+      const info = USER_DEFAULTS[type]
+
+      setUserInfo(info)
+
+      navigate(info.landing);
     }
     
     // const isDev = process.env.NODE_ENV === 'development'
@@ -77,8 +81,6 @@ export default function Login() {
     //   }
     // }
     // }
-
-    navigate('/dashboard');
   };
 
   return (

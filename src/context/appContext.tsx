@@ -1,4 +1,9 @@
 import React, { createContext, useState, useEffect } from 'react';
+import {
+    USER_INFO_DEFAULTS_ADMIN,
+    USER_INFO_DEFAULTS_CLIENT,
+    USER_INFO_DEFAULTS_CANDIDATE
+} from './utils'
 
 export const AppContext = createContext<any>(null);
 
@@ -13,10 +18,6 @@ export type UserInfo = {
   email: string,
   type: string
 };
-
-const USER_INFO_DEFAULTS_ADMIN = { id: 11, firstName: 'ADMIN', lastName: 'ADMIN', type: 'admin', email: 'admin@admin.com'}
-const USER_INFO_DEFAULTS_CLIENT = { id: 9, firstName: 'CLIENT', lastName: 'CLIENT', type: 'client', email: 'client@client.com'}
-const USER_INFO_DEFAULTS_CANDIDATE = { id: 10, firstName: 'CANDIDATE', lastName: 'CANDIDATE', type: 'candidate', email: 'candidate@candidate.com'}
 
 export const USER_DEFAULTS = { admin: USER_INFO_DEFAULTS_ADMIN, client: USER_INFO_DEFAULTS_CLIENT, candidate: USER_INFO_DEFAULTS_CANDIDATE }
 
