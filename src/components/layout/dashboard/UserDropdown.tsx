@@ -32,22 +32,22 @@ export default function UserDropdown(props: PopoverState) {
   ];
 
   const handleLogout = async () => {
-    if (process.env.NODE_ENV === 'development') {
-      try {
-        const res = await axios.post('/logout')
+    // if (process.env.NODE_ENV === 'development') {
+    //   try {
+    //     const res = await axios.post('/logout')
 
-        localStorage.removeItem("type");
+    //     localStorage.removeItem("type");
   
-        if (res.status === 200) {
-          setUserInfo(null)
-          navigate('/')
-        }
-      } catch (err) {
-        console.log(err)
-      }
-    } else { 
+    //     if (res.status === 200) {
+    //       setUserInfo(null)
+    //       navigate('/')
+    //     }
+    //   } catch (err) {
+    //     console.log(err)
+    //   }
+    // } else { 
       navigate('/')
-    }
+    // }
   }
 
   return (

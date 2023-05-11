@@ -68,7 +68,8 @@ function App() {
   ]);
   return (
     <>
-      {process.env.NODE_ENV === 'development' ? devRoutes : prodRoutes}
+      {/* {process.env.NODE_ENV === 'development' ? devRoutes : prodRoutes} */}
+      {prodRoutes}
       <Toaster />
     </>
   );

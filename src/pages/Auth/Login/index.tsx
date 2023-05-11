@@ -41,46 +41,42 @@ export default function Login() {
   const onSubmit = async (data: FormValues) => {    
     // const { email, password } = data;
 
-    let email, password
+    // let email, password
     const type = tempLogin
     
     if (type) {
-      email = `${type}@${type}.com`
-      password = type
+      // email = `${type}@${type}.com`
+      // password = type
 
-      localStorage.setItem("type", type);
+      localStorage.setItem("type", type);      
+      
+      // @ts-ignore
+      setUserInfo(USER_DEFAULTS[type])
     }
     
-    const isDev = process.env.NODE_ENV === 'development'
+    // const isDev = process.env.NODE_ENV === 'development'
 
     // Using backend
-    if (isDev) {
-      try {
-        const res = await axios.post(`/login`, {      
-          email,
-          password,
-        });
+    // if (isDev) {
+    //   try {
+    //     const res = await axios.post(`/login`, {      
+    //       email,
+    //       password,
+    //     });
         
-        // Redirect them to their dashboard
-        if (res.status === 200) {}
+    //     // Redirect them to their dashboard
+    //     if (res.status === 200) {}
         
-        setIsLoginError(null)
-      } catch (err: any) {
-        if (err.response.status === 403){
-          setIsLoginError(err.response.data)
-        } else {
-          setIsLoginError('Something went wrong. Please try again.')
-        }
-      }
-    }
-
-    // Not using backend - demo site
-    if (!isDev) {
-      if (type) {
-        // @ts-ignore
-        setUserInfo(USER_DEFAULTS[type])
-      }
-    }
+    //     setIsLoginError(null)
+    //   } catch (err: any) {
+    //     if (err.response.status === 403){
+    //       setIsLoginError(err.response.data)
+    //     } else {
+    //       setIsLoginError('Something went wrong. Please try again.')
+    //     }
+    //   }
+    // }
+    // }
 
     navigate('/dashboard');
   };
