@@ -13,6 +13,7 @@ import Consultants from 'src/pages/Dashboard/Consultants';
 import Consultant from 'src/pages/Dashboard/Consultants/Consultant';
 import AddConsultant from 'src/pages/Dashboard/Consultants/AddConsultant';
 import Projects from 'src/pages/Dashboard/Projects';
+import Project from 'src/pages/Dashboard/Projects/Project';
 import Settings from 'src/pages/Dashboard/Settings';
 import Preferences from 'src/pages/Dashboard/Settings/Preferences';
 import Register from 'src/pages/Auth/Register'
@@ -39,6 +40,7 @@ function App() {
           { path: 'consultants/add-consultant', element: <AddConsultant /> },
           { path: 'consultants/:id', element: <Consultant /> },
           { path: 'projects/', element: <Projects /> },
+          { path: 'projects/:id', element: <Project /> },
           { path: 'settings', element: <Settings /> },
           { path: 'settings/preferences', element: <Preferences /> },
         ]},
@@ -63,6 +65,7 @@ function App() {
           { path: 'consultants/add-consultant', element: <AddConsultant /> },
           { path: 'consultants/:id', element: <Consultant /> },
           { path: 'projects/', element: <Projects /> },
+          { path: 'projects/:id', element: <Project /> },
           { path: 'settings', element: <Settings /> },
           { path: 'settings/preferences', element: <Preferences /> },
       ]}]

@@ -1,26 +1,15 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
-// import ConsultantTable from './ConsultantTable';
+import ProjectsTable from './ProjectsTable';
 
 export default function Projects() {
   return (
     <Styled>
       <div className={'title-container'}>
-        <h1>Projects</h1>
-        <Link to="/dashboard/project/add-project" >
-          <div className={'button-container'}>
-            <button className='add-project'>
-              <FontAwesomeIcon icon={faPlus} style={{ marginRight: '.5rem' }} />
-              Add Project
-            </button>
-          </div>
-        </Link>
+        <h1>Projects List</h1>
       </div>
 
-      {/* <ConsultantTable /> */}
+      <ProjectsTable />
     </Styled>
   );
 }

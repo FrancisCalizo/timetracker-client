@@ -12,10 +12,11 @@ import { Tooltip } from 'react-tooltip';
 import { useTimesheets } from 'src/context/timesheetsContext';
 import { useClient } from 'src/context/clientContext';
 import { useConsultant } from 'src/context/consultantContext';
+import { useProjects } from 'src/context/projectsContext';
 
 interface ViewEditTableButtonsProps {
   rowObj: any;
-  type: 'CLIENT' | 'TIMESHEET' | 'CONSULTANT';
+  type: 'CLIENT' | 'TIMESHEET' | 'CONSULTANT' | 'PROJECT';
 }
 
 export default function ViewEditTableButtons(props: ViewEditTableButtonsProps) {
@@ -26,6 +27,7 @@ export default function ViewEditTableButtons(props: ViewEditTableButtonsProps) {
   const { setSelectedClient, setIsEditMode: setIsEditModeClient } = useClient();
   const { setSelectedConsultant, setIsEditMode: setIsEditModeConsultant } =
     useConsultant();
+  const { setSelectedProject, setIsEditMode: setIsEditModeProject } = useProjects();
 
   const handleButtonClick = (action: 'VIEW' | 'EDIT') => {
     if (type === 'CLIENT') {
@@ -44,6 +46,12 @@ export default function ViewEditTableButtons(props: ViewEditTableButtonsProps) {
       setSelectedConsultant(rowObj.original);
       setIsEditModeConsultant(action === 'VIEW' ? false : true);
       navigate(`/dashboard/consultants/${rowObj.id}`);
+    }
+
+    if (type === 'PROJECT') {
+      setSelectedProject(rowObj.original);
+      setIsEditModeProject(action === 'VIEW' ? false : true);
+      navigate(`/dashboard/projects/${rowObj.id}`);
     }
   };
 
