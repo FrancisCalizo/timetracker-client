@@ -19,15 +19,19 @@ interface ViewEditTableButtonsProps {
   type: 'CLIENT' | 'TIMESHEET' | 'CONSULTANT' | 'PROJECT';
 }
 
+interface StyledProps {
+  type: string;
+}
+
 export default function ViewEditTableButtons(props: ViewEditTableButtonsProps) {
   const { rowObj, type } = props;
 
   const navigate = useNavigate();
   const { setSelectedTimesheet, setIsEditMode } = useTimesheets();
   const { setSelectedClient, setIsEditMode: setIsEditModeClient } = useClient();
+  const { setSelectedProject, setIsEditMode: setIsEditModeProject } = useProjects();
   const { setSelectedConsultant, setIsEditMode: setIsEditModeConsultant } =
     useConsultant();
-  const { setSelectedProject, setIsEditMode: setIsEditModeProject } = useProjects();
 
   const handleButtonClick = (action: 'VIEW' | 'EDIT') => {
     if (type === 'CLIENT') {
@@ -56,7 +60,7 @@ export default function ViewEditTableButtons(props: ViewEditTableButtonsProps) {
   };
 
   return (
-    <Styled>
+    <Styled type={type}>
       <button
         className={classnames('button-view', 'button')}
         onClick={() => handleButtonClick('VIEW')}
@@ -79,7 +83,7 @@ export default function ViewEditTableButtons(props: ViewEditTableButtonsProps) {
   );
 }
 
-const Styled = styled.div`
+const Styled = styled.div<StyledProps>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -105,6 +109,7 @@ const Styled = styled.div`
   }
 
   .button-edit {
+    display: ${(props) => ['PROJECT'].includes(props.type) ? 'none' : 'block'};
     background: ${(props) => props.theme.colors.edit};
   }
 

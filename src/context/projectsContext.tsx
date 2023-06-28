@@ -6,7 +6,7 @@ const ProjectsContext = React.createContext(null as any);
 
 function ProjectsProvider({ children }: any) {
   const [projectsList, setProjectsList] = React.useState(FAKE_DATA);
-  const [selectedTimesheet, setSelectedProject] = React.useState(null);
+  const [selectedProject, setSelectedProject] = React.useState(null);
   const [isEditMode, setIsEditMode] = React.useState(false);
 
   return (
@@ -14,7 +14,7 @@ function ProjectsProvider({ children }: any) {
       value={{
         projectsList,
         setProjectsList,
-        selectedTimesheet,
+        selectedProject,
         setSelectedProject,
         isEditMode,
         setIsEditMode,

@@ -23,7 +23,7 @@ export const MENU_LINKS = [
   { title: 'Projects', url: 'projects', icon: faUsers, allowedPermissions: ['admin', 'candidate'] },
   { title: 'Timesheets', url: 'timesheets', icon: faBusinessTime, allowedPermissions: ['admin', 'candidate', 'client'] },
   { title: 'Consultants', url: 'consultants', icon: faUser, allowedPermissions: ['admin', 'client'] },
-  { title: 'Settings', url: 'settings', icon: faCog, section: 'BOTTOM', allowedPermissions: ['admin', 'candidate', 'client'] },
+  // { title: 'Settings', url: 'settings', icon: faCog, section: 'BOTTOM', allowedPermissions: ['admin', 'candidate', 'client'] },
 ];
 
 export default function Sidebar() {
