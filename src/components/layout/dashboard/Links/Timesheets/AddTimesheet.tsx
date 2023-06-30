@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components'
 import { v4 as uuidv4 } from 'uuid';
 import add from 'date-fns/add';
 import Select from 'react-select';
 import toast from 'react-hot-toast';
 import format from 'date-fns/format';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -31,7 +31,17 @@ interface StyledProps {
 
 export default function AddClient() {
   const navigate = useNavigate();
+  const { search: param = "" } = useLocation()
   const { setTimesheetsList } = useTimesheets();
+
+  const clientName = param.split('client=')[1]?.replace(/_/g,' ')
+
+  useEffect(() => {
+    if (!!clientName) {
+      setValue('clientName', clientName);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const {
     register,
@@ -95,7 +105,7 @@ export default function AddClient() {
       lastName: data.consultantLastName,
       timesheets: data.timesheets,
       client: data.clientName,
-              isFixedRate: data.isFixedRate,
+      isFixedRate: data.isFixedRate,
     };
 
     setTimesheetsList((old: any) => [...old, newTimesheet]);
@@ -130,6 +140,7 @@ export default function AddClient() {
                   {...register('clientName', {
                     required: 'This field is required',
                   })}
+                  disabled={!!clientName}
                 />
                 {errors.clientName && (
                   <div className={'error-message'}>

@@ -7,7 +7,8 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import { useProjects } from 'src/context/projectsContext';
 import { useAppContext } from 'src/context/appContext';
-import BackToLink from '../../BackToLink';
+import BackToLink from 'src/components/layout/dashboard/BackToLink';
+import TimesheetHistoryTable from './TimesheetHistoryTable';
 
 interface StyledProps {
   themeColor: string;
@@ -24,6 +25,8 @@ export default function Project() {
   } = useProjects();
 
   console.log(selectedProject)
+
+  const strReplace = (str: string = "") => str.replace(/\s+/g, '_')
 
   // Set Values of form on initial render
   // React.useEffect(() => {
@@ -68,12 +71,18 @@ export default function Project() {
           <div>
             <div className='subheader-container'>              
               <h3>Timesheet History</h3>
-              <Link to="/dashboard/timesheets/add-timesheet">
+              <Link to={
+                `/dashboard/timesheets/add-timesheet?client=${strReplace(selectedProject?.client)}`
+                }>
                 <button className="add-button">
                   <FontAwesomeIcon icon={faPlus} style={{ marginRight: '.5rem' }} />
                   Add Timesheet
                 </button>
               </Link>
+            </div>
+
+            <div>
+              <TimesheetHistoryTable />
             </div>
           </div>
         </div>
@@ -146,6 +155,7 @@ const Styled = styled.div<StyledProps>`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 2rem;
   }
 
   .add-button {
