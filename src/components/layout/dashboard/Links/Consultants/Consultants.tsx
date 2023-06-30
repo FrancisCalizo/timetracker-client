@@ -1,23 +1,23 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import ConsultantTable from './ConsultantTable';
 
 export default function Consultants() {
+  const navigate = useNavigate();
+  
   return (
     <Styled>
       <div className={'title-container'}>
         <h1>Consultants</h1>
-        <Link to="/dashboard/consultants/add-consultant" >
-          <div className={'button-container'}>
-            <button className='add-consultant'>
-              <FontAwesomeIcon icon={faPlus} style={{ marginRight: '.5rem' }} />
-              Add Consultant
-            </button>
-          </div>
-        </Link>
+        <div className={'button-container'}>
+          <button className='add-consultant' onClick={() => navigate(-1)}>
+            <FontAwesomeIcon icon={faPlus} style={{ marginRight: '.5rem' }} />
+            Add Consultant
+          </button>
+        </div>
       </div>
 
       <ConsultantTable />

@@ -7,8 +7,8 @@ import { useAppContext } from 'src/context/appContext';
 
 interface BackToLinkProps {
   text: string;
-  to: string;
-  onClick?: () => null;
+  to?: string;
+  onClick?: () => any;
 }
 
 interface StyledProps {
@@ -16,7 +16,7 @@ interface StyledProps {
 }
 
 export default function BackToLink(props: BackToLinkProps) {
-  const { text, to, onClick = () => null } = props;
+  const { text, to = '#', onClick = () => null } = props;
 
   const { themeColor } = useAppContext()
 

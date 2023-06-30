@@ -1,15 +1,20 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 import BackToLink from 'src/components/layout/dashboard/BackToLink';
 import { useAppContext } from 'src/context/appContext';
 
 export default function Preferences() {
   const { setThemeColor } = useAppContext()
+  const navigate = useNavigate()
 
   return (
     <Styled>
       <div style={{ maxWidth: 200 }}>
-        <BackToLink to="/dashboard/settings" text="Back to Settings" />
+        <BackToLink 
+          onClick={() => navigate(-1)} 
+          text="Back to Settings" 
+        />
       </div>
       <div className={'title-container'}>
         <h1>Preferences</h1>

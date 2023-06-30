@@ -76,9 +76,11 @@ export default function Client() {
     <Styled>
       <div style={{ maxWidth: 200 }}>
         <BackToLink
-          to="/dashboard"
           text="Back to Client List"
-          onClick={() => setSelectedClient(null)}
+          onClick={() => {
+            setSelectedClient(null)
+            navigate(-1)
+          }}
         />
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>

@@ -1,6 +1,9 @@
 import * as React from 'react';
 import styled from 'styled-components'
+import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import { useProjects } from 'src/context/projectsContext';
 import { useAppContext } from 'src/context/appContext';
@@ -32,10 +35,12 @@ export default function Project() {
   return (
     <Styled themeColor={themeColor}>
       <div style={{ maxWidth: 200 }}>
-        <BackToLink
-          to="/dashboard/projects"
+        <BackToLink          
           text="Back to Projects List"
-          onClick={() => setSelectedProject(null)}
+          onClick={() => {
+            setSelectedProject(null)
+            navigate(-1)
+          }}
         />
       </div>
 
@@ -54,13 +59,23 @@ export default function Project() {
                 id="clientName"
                 className={'input'}
                 type="text"
-                value={selectedProject.client}
+                value={selectedProject?.client}
                 disabled
               />
             </div>
           </div>
 
-          <h3>Timesheet History</h3>
+          <div>
+            <div className='subheader-container'>              
+              <h3>Timesheet History</h3>
+              <Link to="/dashboard/timesheets/add-timesheet">
+                <button className="add-button">
+                  <FontAwesomeIcon icon={faPlus} style={{ marginRight: '.5rem' }} />
+                  Add Timesheet
+                </button>
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </Styled>
@@ -125,5 +140,25 @@ const Styled = styled.div<StyledProps>`
     border: 1px solid lightgray;
     border-radius: 4px;
     box-sizing: border-box;
+  }
+
+  .subheader-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .add-button {
+    display: block;
+    background: var(--color-primary);
+    color: white;
+    border: 0.5px solid white;
+    padding: 0.5em .75rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: var(--button-box-shadow);
+    transition: background 300ms ease-in-out, transform 150ms ease-in-out,
+      filter 150ms ease-in-out;
   }
 `

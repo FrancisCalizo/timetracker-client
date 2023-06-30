@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
@@ -42,7 +41,7 @@ export default function AddClient() {
   return (
     <Styled>
       <div style={{ maxWidth: 200 }}>
-        <BackToLink to="/dashboard" text="Back to Client List" />
+        <BackToLink onClick={() => navigate(-1)} text="Back to Client List" />
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={'page-container'}>
@@ -144,11 +143,9 @@ export default function AddClient() {
             </div>
 
             <div className={'buttons-container'}>
-              <Link to={'/dashboard'}>
-                <button className={`${'button'} ${'cancel'}`}>
-                  Cancel
-                </button>
-              </Link>
+              <button onClick={() => navigate(-1)} className={`${'button'} ${'cancel'}`}>
+                Cancel
+              </button>
 
               <button
                 type="submit"

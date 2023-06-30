@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import TimesheetsTable from './TimesheetsTable';
-import classes from './Timesheets.module.css';
 
 export default function Timesheets() {
   return (

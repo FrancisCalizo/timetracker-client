@@ -135,7 +135,10 @@ export default function Timesheet() {
   return (
     <Styled themeColor={themeColor}>
       <div style={{ maxWidth: 200 }}>
-        <BackToLink to="/dashboard/timesheets" text="Back to Timesheet List" />
+        <BackToLink 
+          onClick={() => navigate(-1)}
+          text="Back to Timesheet List" 
+        />
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={'page-container'}>

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -53,7 +52,7 @@ export default function AddConsultant() {
     <Styled themeColor={themeColor}>
       <div style={{ maxWidth: 200 }}>
         <BackToLink
-          to="/dashboard/consultants"
+          onClick={() => navigate(-1)}
           text="Back to Consultant List"
         />
       </div>
@@ -130,11 +129,12 @@ export default function AddConsultant() {
             </div>
 
             <div className={'buttons-container'}>
-              <Link to={'/dashboard/consultants'}>
-                <button className={`${'button'} ${'cancel'}`}>
-                  Cancel
-                </button>
-              </Link>
+              <button 
+                className={`${'button'} ${'cancel'}`}
+                onClick={() => navigate(-1)}
+              >
+                Cancel
+              </button>
 
               <button
                 type="submit"

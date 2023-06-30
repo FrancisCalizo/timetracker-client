@@ -5,9 +5,8 @@ import add from 'date-fns/add';
 import Select from 'react-select';
 import toast from 'react-hot-toast';
 import format from 'date-fns/format';
-import { Link } from 'react-router-dom';
-import { Tooltip } from 'react-tooltip';
 import { useNavigate } from 'react-router-dom';
+import { Tooltip } from 'react-tooltip';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
@@ -112,7 +111,7 @@ export default function AddClient() {
   return (
     <Styled themeColor={themeColor}>
       <div style={{ maxWidth: 200 }}>
-        <BackToLink to="/dashboard/timesheets" text="Back to Timesheet List" />
+        <BackToLink onClick={() => navigate(-1)} text="Back to Timesheet List" />
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={'page-container'}>
@@ -368,11 +367,9 @@ export default function AddClient() {
             )}
 
             <div className={'buttons-container'}>
-              <Link to={'/dashboard/timesheets'}>
-                <button className={`${'button'} ${'cancel'}`}>
-                  Cancel
-                </button>
-              </Link>
+              <button className={`${'button'} ${'cancel'}`} onClick={() => navigate(-1)}>
+                Cancel
+              </button>
 
               <button
                 type="submit"
