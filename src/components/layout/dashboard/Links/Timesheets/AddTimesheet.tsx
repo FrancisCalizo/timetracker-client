@@ -51,7 +51,8 @@ export default function AddClient() {
     setValue,
     watch,
   } = useForm<FormValues>({
-    resolver: yupResolver(validationSchema),
+    /** TODO: tslint error */
+    resolver: yupResolver(validationSchema) as any,
     defaultValues: { rate: 0 },
   });
 

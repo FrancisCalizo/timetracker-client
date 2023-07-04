@@ -45,7 +45,8 @@ export default function Timesheet() {
     watch,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
-    resolver: yupResolver(validationSchema),
+    /** TODO: tslint error */
+    resolver: yupResolver(validationSchema) as any,
     defaultValues: { rate: 0 },
   });
 
