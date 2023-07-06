@@ -169,7 +169,7 @@ export default function AddClient() {
                     />
                   )}
                   control={control}
-                  defaultValue={{ value: 'submitted', label: 'Submitted' }}
+                  defaultValue={{ value: 'pending', label: 'Pending' }}
                 />
 
                 {errors.status && (

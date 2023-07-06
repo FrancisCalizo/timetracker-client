@@ -7,7 +7,7 @@ const andAnotherMonday = sub(anotherMonday, { days: 14 });
 export const FAKE_DATA = [
   {
     id: '1',
-    status: 'missing',
+    status: 'pending',
     client: 'Centrium Consulting',
     firstName: 'Ryan',
     lastName: 'Howard',
@@ -111,8 +111,8 @@ export const FAKE_DATA = [
   },
   {
     id: '3',
-    status: 'submitted',
     client: 'Pulte Homes',
+    status: 'pending',
     firstName: 'Morgan',
     lastName: 'Stanley',
     isFixedRate: true,

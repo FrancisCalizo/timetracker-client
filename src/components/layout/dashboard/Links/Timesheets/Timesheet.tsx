@@ -6,6 +6,7 @@ import add from 'date-fns/add';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { useForm, Controller, useFieldArray } from 'react-hook-form';
+import emailjs from '@emailjs/browser';
 
 import Select from 'react-select';
 import toast from 'react-hot-toast';
@@ -36,6 +37,9 @@ export default function Timesheet() {
   const navigate = useNavigate();
   const { selectedTimesheet, setTimesheetsList, isEditMode, setIsEditMode } =
     useTimesheets();
+
+  const publicKey = process.env.REACT_APP_EMAILJS_KEY;
+  const serviceId = process.env.REACT_APP_EMAILJS_SERVICE_ID;
 
   const {
     register,
@@ -110,6 +114,10 @@ export default function Timesheet() {
     }
   };
 
+  const handleSubmitForApproval = () => {
+    alert('submit timesheet for approval')
+  }
+
   const onSubmit = (data: FormValues) => {
     const newTimesheet = {
       status: data.status.value,
@@ -130,6 +138,31 @@ export default function Timesheet() {
       position: 'bottom-right',
     });
 
+    const env = process.env.NODE_ENV;
+
+    // TODO: Temporary params
+    const templateParams = {
+      candidate_name: 'John Smith',
+      to_name: 'Bill Burr',
+      timesheet_link: 'https://www.google.com/'
+    };
+
+    console.log('serviceId' ,serviceId)
+    console.log('publicKey' ,publicKey)
+
+    // Send Email to Client for Approval if not approved
+    const NOT_APPROVED = true;
+    if (NOT_APPROVED) {
+      // @ts-ignore
+      emailjs.send(serviceId, 'aagrav_timetracker', templateParams, publicKey)
+      .then((result) => {
+          console.log(result.text);
+      }, (error) => {
+          console.log(error.text);
+      });
+    }
+
+
     navigate(`/dashboard/timesheets`);
   };
 
@@ -144,19 +177,32 @@ export default function Timesheet() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={'page-container'}>
           <div className={'form-container'}>
-            {!isEditMode && (
-              <div className={'edit-container'}>
-                <button
-                  type="button"
-                  onClick={() => setIsEditMode(true)}
-                  data-tooltip-id="edit-tooltip"
-                  data-tooltip-content="Edit Client"
-                >
-                  <FontAwesomeIcon icon={faEdit} />
-                </button>
-              </div>
-            )}
+            <div className='top-button-container'>
+              {!isEditMode && (
+                <>
+                  <div className={'edit-container'}>
+                    <button
+                      type="button"
+                      onClick={() => setIsEditMode(true)}
+                      data-tooltip-id="edit-tooltip"
+                      data-tooltip-content="Edit Timesheet"
+                    >
+                      <FontAwesomeIcon icon={faEdit} />
+                    </button>
+                  </div>
 
+                  {selectedTimesheet?.status === 'pending' && (
+                    <button 
+                      className={`${'button'}`}
+                      onClick={handleSubmitForApproval}
+                      type="button"
+                    >
+                      Submit for Approval
+                    </button>
+                  )}
+                </>
+              )}
+              </div>
             <Tooltip id="edit-tooltip" />
 
             <h2>{isEditMode ? 'Edit' : 'View'} Timesheet</h2>
@@ -455,9 +501,36 @@ const Styled = styled.div<StyledProps>`
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     background: #fff;
 
+    & > .top-button-container {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      
+      .button {
+        display: block;
+        font-size: ${(props) => props.theme.input.fontSize};
+        box-shadow: ${(props) => props.theme.button.boxShadow};
+        border-radius: 6px;
+        cursor: pointer;
+
+        transition: background 300ms ease-in-out, transform 150ms ease-in-out,
+          filter 150ms ease-in-out;
+        background: ${(props) => props.theme.colors[props.themeColor]};
+        color: white;
+        border: 0.5px solid white;
+        padding: 0.6rem;
+        margin-left: .5rem;
+
+        &:hover{
+          filter: brightness(85%);
+        }
+      }
+    }
+
     & > h2 {
       text-align: center;
       font-size: 2rem;
+      margin-bottom: 8px;
       color: rgba(0, 0, 0, 0.7);
     }
   }
@@ -465,7 +538,6 @@ const Styled = styled.div<StyledProps>`
   .edit-container {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 2rem;
 
     & > button {
       cursor: pointer;

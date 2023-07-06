@@ -27,9 +27,9 @@ export interface CreateRows {
 }
 
 export const SELECT_OPTIONS = [
-  { value: 'missing', label: 'Missing' },
+  { value: 'pending', label: 'Pending' },
+  { value: 'denied', label: 'Denied' },
   { value: 'approved', label: 'Approved' },
-  { value: 'submitted', label: 'Submitted' },
 ];
 
 export const validationSchema = yup.object().shape({

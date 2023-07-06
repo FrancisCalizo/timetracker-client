@@ -17,8 +17,7 @@ interface StyledProps {
 }
 
 export default function Topbar() {
-  const { userInfo } = useAppContext()
-  const { themeColor } = useAppContext()
+  const { userInfo, themeColor } = useAppContext()
 
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
