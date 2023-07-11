@@ -1,5 +1,6 @@
 import { useRoutes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import { ClerkProvider } from "@clerk/clerk-react";
 
 import Login from 'src/pages/Auth/Login';
 import Dashboard from 'src/pages/Dashboard';
@@ -19,64 +20,47 @@ import Preferences from 'src/pages/Dashboard/Settings/Preferences';
 import Register from 'src/pages/Auth/Register'
 import Landing from 'src/pages/Home/Landing'
 import ProtectedRoute from 'src/components/ProtectedRoute'
+import ClerkProtectedHOC from './components/ClerkProtectedHOC';
+
+if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
+  throw new Error("Missing Publishable Key")
+}
+
+const clerkPubKey = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
 
 function App() {
-  const prodRoutes = useRoutes([
+  const routes = useRoutes([
     { path: '/', element: <Landing /> },
     { path: '/login', element: <Login /> },
     { path: '/register', element: <Register /> },
     { path: '/forgot-password', element: <ResetPassword /> },
     // { element: <ProtectedRoute />, 
-    { path: '/dashboard', 
+    { path: '/dashboard',
       children : [
           // { path: '/dashboard', children: [
-          { index: true, element: <Dashboard /> },
-          { path: 'clients/:id', element: <Client /> },
-          { path: 'clients/add-client', element: <AddClient /> },
-          { path: 'timesheets', element: <Timesheets /> },
-          { path: 'timesheets/:id', element: <Timesheet /> },
-          { path: 'timesheets/add-timesheet', element: <AddTimesheet /> },
-          { path: 'consultants/', element: <Consultants /> },
-          { path: 'consultants/add-consultant', element: <AddConsultant /> },
-          { path: 'consultants/:id', element: <Consultant /> },
-          { path: 'projects/', element: <Projects /> },
-          { path: 'projects/:id', element: <Project /> },
-          { path: 'settings', element: <Settings /> },
-          { path: 'settings/preferences', element: <Preferences /> },
+          { index: true, element:  <ClerkProtectedHOC children={<Dashboard />} />},
+          { path: 'clients/:id', element: <ClerkProtectedHOC children={<Client />} /> },
+          { path: 'clients/add-client', element: <ClerkProtectedHOC children={<AddClient />} /> },
+          { path: 'timesheets', element: <ClerkProtectedHOC children={<Timesheets />} /> },
+          { path: 'timesheets/:id', element: <ClerkProtectedHOC children={<Timesheet />} /> },
+          { path: 'timesheets/add-timesheet', element: <ClerkProtectedHOC children={<AddTimesheet />} /> },
+          { path: 'consultants/', element: <ClerkProtectedHOC children={<Consultants />} /> },
+          { path: 'consultants/add-consultant', element: <ClerkProtectedHOC children={<AddConsultant />} /> },
+          { path: 'consultants/:id', element: <ClerkProtectedHOC children={<Consultant />} /> },
+          { path: 'projects/', element: <ClerkProtectedHOC children={<Projects />} /> },
+          { path: 'projects/:id', element: <ClerkProtectedHOC children={<Project />} /> },
+          { path: 'settings', element: <ClerkProtectedHOC children={<Settings />} /> },
+          { path: 'settings/preferences', element: <ClerkProtectedHOC children={<Preferences />} /> },
         ]},
     { path: '*', element: <h1>Page not found</h1> },
   ]);
 
-  const devRoutes = useRoutes([
-    { path: '/', element: <Landing /> },
-    { path: '/login', element: <Login /> },
-    { path: '/register', element: <Register /> },
-    { path: '/forgot-password', element: <ResetPassword /> },
-    { element: <ProtectedRoute />, 
-      children : [
-          { path: '/dashboard', children: [
-          { index: true, element: <Dashboard /> },
-          { path: 'clients/:id', element: <Client /> },
-          { path: 'clients/add-client', element: <AddClient /> },
-          { path: 'timesheets', element: <Timesheets /> },
-          { path: 'timesheets/:id', element: <Timesheet /> },
-          { path: 'timesheets/add-timesheet', element: <AddTimesheet /> },
-          { path: 'consultants/', element: <Consultants /> },
-          { path: 'consultants/add-consultant', element: <AddConsultant /> },
-          { path: 'consultants/:id', element: <Consultant /> },
-          { path: 'projects/', element: <Projects /> },
-          { path: 'projects/:id', element: <Project /> },
-          { path: 'settings', element: <Settings /> },
-          { path: 'settings/preferences', element: <Preferences /> },
-      ]}]
-    },
-    { path: '*', element: <h1>Page not found</h1> },
-  ]);
   return (
     <>
-      {/* {process.env.NODE_ENV === 'development' ? devRoutes : prodRoutes} */}
-      {prodRoutes}
-      <Toaster />
+      <ClerkProvider publishableKey={clerkPubKey}>
+        {routes}
+        <Toaster />
+      </ClerkProvider>
     </>
   );
 }
