@@ -6,7 +6,6 @@ import add from 'date-fns/add';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { useForm, Controller, useFieldArray } from 'react-hook-form';
-import emailjs from '@emailjs/browser';
 
 import Select from 'react-select';
 import toast from 'react-hot-toast';
@@ -28,7 +27,8 @@ import {
 } from 'src/components/layout/dashboard/Links/Timesheets/utils/types';
 import { selectStyles } from 'src/components/layout/dashboard/Links/Timesheets/AddTimesheet';
 import { useAppContext } from 'src/context/appContext';
-
+import Modal from 'src/components/common/Modal';
+import SubmitConfirmation from './SubmitConfirmation';
 interface StyledProps {
   themeColor: string;
 }
@@ -37,9 +37,6 @@ export default function Timesheet() {
   const navigate = useNavigate();
   const { selectedTimesheet, setTimesheetsList, isEditMode, setIsEditMode } =
     useTimesheets();
-
-  const publicKey = process.env.REACT_APP_EMAILJS_KEY;
-  const serviceId = process.env.REACT_APP_EMAILJS_SERVICE_ID;
 
   const {
     register,
@@ -64,6 +61,7 @@ export default function Timesheet() {
   const watchIsFixedRate = watch('isFixedRate', false);
   const isFirstRef = React.useRef(true);
 
+  const [isOpen, setIsOpen] = useState(false)
   const [weekSelection, setWeekSelection] =
     useState<WeekSelection>(DEFAULT_WEEK);
 
@@ -114,10 +112,6 @@ export default function Timesheet() {
     }
   };
 
-  const handleSubmitForApproval = () => {
-    alert('submit timesheet for approval')
-  }
-
   const onSubmit = (data: FormValues) => {
     const newTimesheet = {
       status: data.status.value,
@@ -138,31 +132,6 @@ export default function Timesheet() {
       position: 'bottom-right',
     });
 
-    const env = process.env.NODE_ENV;
-
-    // TODO: Temporary params
-    const templateParams = {
-      candidate_name: 'John Smith',
-      to_name: 'Bill Burr',
-      timesheet_link: 'https://www.google.com/'
-    };
-
-    console.log('serviceId' ,serviceId)
-    console.log('publicKey' ,publicKey)
-
-    // Send Email to Client for Approval if not approved
-    const NOT_APPROVED = true;
-    if (NOT_APPROVED) {
-      // @ts-ignore
-      emailjs.send(serviceId, 'aagrav_timetracker', templateParams, publicKey)
-      .then((result) => {
-          console.log(result.text);
-      }, (error) => {
-          console.log(error.text);
-      });
-    }
-
-
     navigate(`/dashboard/timesheets`);
   };
 
@@ -171,7 +140,7 @@ export default function Timesheet() {
       <div style={{ maxWidth: 200 }}>
         <BackToLink 
           onClick={() => navigate(-1)}
-          text="Back to Timesheet List" 
+          text="Back to Timesheet List"           
         />
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -194,7 +163,7 @@ export default function Timesheet() {
                   {selectedTimesheet?.status === 'pending' && (
                     <button 
                       className={`${'button'}`}
-                      onClick={handleSubmitForApproval}
+                      onClick={() => setIsOpen(true)}
                       type="button"
                     >
                       Submit for Approval
@@ -478,6 +447,13 @@ export default function Timesheet() {
           </div>
         </div>
       </form>
+
+      <Modal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      >
+        <SubmitConfirmation setIsOpen={setIsOpen}/>
+      </Modal>
     </Styled>
   );
 }
