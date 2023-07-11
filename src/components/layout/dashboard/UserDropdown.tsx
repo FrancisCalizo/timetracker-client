@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { ArrowContainer, PopoverState } from 'react-tiny-popover';
+import { useSession } from "@clerk/clerk-react";
 
 import { useAppContext } from 'src/context/appContext';
 
@@ -12,6 +13,7 @@ export default function UserDropdown(props: PopoverState) {
 
   const { setUserInfo } = useAppContext()
   const navigate = useNavigate();
+  const { session } = useSession();
 
   const userDashboardDropdownItems = [
     {
@@ -32,22 +34,13 @@ export default function UserDropdown(props: PopoverState) {
   ];
 
   const handleLogout = async () => {
-    // if (process.env.NODE_ENV === 'development') {
-    //   try {
-    //     const res = await axios.post('/logout')
-
-    //     localStorage.removeItem("type");
-  
-    //     if (res.status === 200) {
-    //       setUserInfo(null)
-    //       navigate('/')
-    //     }
-    //   } catch (err) {
-    //     console.log(err)
-    //   }
-    // } else { 
-      navigate('/')
-    // }
+    try {      
+      if (!!session) {
+        session.end()
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
