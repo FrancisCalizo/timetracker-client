@@ -5,6 +5,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import ClientTable from './ClientTable';
 import { useAppContext } from 'src/context/appContext';
+import { useUser } from "@clerk/clerk-react";
 
 interface StyledProps {
   themeColor: string;
@@ -12,6 +13,9 @@ interface StyledProps {
 
 export default function Clients() {
   const { themeColor } = useAppContext()
+  const user = useUser()
+
+  console.log('user', user)
 
   return (
     <Styled themeColor={themeColor}>
