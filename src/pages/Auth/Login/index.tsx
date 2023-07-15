@@ -11,6 +11,7 @@ export default function SignInPage() {
 }
 
 const Styled = styled.div`
+  background: #f1f2f6;
   display: flex;
   justify-content: center;
   align-items: center;

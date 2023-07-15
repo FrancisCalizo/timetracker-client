@@ -8,10 +8,14 @@ import { useSession } from "@clerk/clerk-react";
 
 import { useAppContext } from 'src/context/appContext';
 
+interface StyledProps {
+  themeColor: string;
+}
+
 export default function UserDropdown(props: PopoverState) {
   const { position, childRect, popoverRect } = props;
 
-  const { setUserInfo } = useAppContext()
+  const { setUserInfo, themeColor } = useAppContext()
   const navigate = useNavigate();
   const { session } = useSession();
 
@@ -44,7 +48,7 @@ export default function UserDropdown(props: PopoverState) {
   }
 
   return (
-    <Styled>
+    <Styled themeColor={themeColor}>
       <ArrowContainer
         position={position}
         childRect={childRect}
@@ -72,7 +76,7 @@ export default function UserDropdown(props: PopoverState) {
   );
 }
 
-const Styled = styled.div`
+const Styled = styled.div<StyledProps>`
   .dropdown-container {
     background: white;
     border: 1px solid lightgray;
@@ -98,7 +102,7 @@ const Styled = styled.div`
   }
 
   .dropdown-row:hover {
-    background: var(--color-primary);
+    background: ${(props) => props.theme.colors[props.themeColor]};
     color: white;
   }
 

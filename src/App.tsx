@@ -19,8 +19,9 @@ import Settings from 'src/pages/Dashboard/Settings';
 import Preferences from 'src/pages/Dashboard/Settings/Preferences';
 import Register from 'src/pages/Auth/Register'
 import Landing from 'src/pages/Home/Landing'
-import ProtectedRoute from 'src/components/ProtectedRoute'
 import ClerkProtectedHOC from './components/ClerkProtectedHOC';
+
+import './App.css'
 
 if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key")
@@ -57,7 +58,17 @@ function App() {
 
   return (
     <>
-      <ClerkProvider publishableKey={clerkPubKey}>
+      <ClerkProvider
+        appearance={
+          {
+            layout: {
+              logoPlacement: 'inside',
+              showOptionalFields: true,
+              socialButtonsPlacement: "bottom",
+            },
+          }
+        }
+        publishableKey={clerkPubKey}>
         {routes}
         <Toaster />
       </ClerkProvider>
